@@ -19,71 +19,43 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-    background: var(--gris-fondo);
-    color: var(--texto);
-    line-height: 1.6;
-    padding-bottom: 40px;
+    background: var(--gris-fondo); color: var(--texto); line-height: 1.6; padding-bottom: 40px;
   }
   .header {
     background: linear-gradient(135deg, var(--azul) 0%, var(--azul-claro) 100%);
-    color: white;
-    padding: 32px 16px 24px;
-    text-align: center;
+    color: white; padding: 32px 16px 24px; text-align: center;
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
   }
   .header h1 { font-size: 1.6em; font-weight: 700; letter-spacing: 0.5px; }
   .header p { font-size: 0.9em; opacity: 0.85; margin-top: 4px; }
   .nav {
-    display: flex;
-    justify-content: center;
-    gap: 4px;
-    background: var(--blanco);
-    border-bottom: 1px solid var(--gris-borde);
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    display: flex; justify-content: center; gap: 4px;
+    background: var(--blanco); border-bottom: 1px solid var(--gris-borde);
+    position: sticky; top: 0; z-index: 10;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04); flex-wrap: wrap;
   }
   .nav button {
-    flex: 1;
-    max-width: 180px;
-    background: none;
-    border: none;
-    padding: 16px 8px;
-    font-size: 0.95em;
-    font-weight: 600;
-    color: var(--texto-suave);
-    cursor: pointer;
-    border-bottom: 3px solid transparent;
-    transition: all 0.2s;
+    flex: 1; min-width: 80px; max-width: 160px; background: none; border: none;
+    padding: 16px 6px; font-size: 0.9em; font-weight: 600;
+    color: var(--texto-suave); cursor: pointer;
+    border-bottom: 3px solid transparent; transition: all 0.2s;
   }
   .nav button.active { color: var(--azul); border-bottom-color: var(--dorado); }
   .nav button:hover { color: var(--azul-claro); }
   .container { max-width: 800px; margin: 0 auto; padding: 24px 16px; }
   .seccion-titulo {
-    font-size: 1.3em;
-    font-weight: 700;
-    color: var(--azul);
-    margin: 28px 0 16px;
-    padding-bottom: 8px;
-    border-bottom: 2px solid var(--dorado);
-    display: inline-block;
+    font-size: 1.3em; font-weight: 700; color: var(--azul);
+    margin: 28px 0 16px; padding-bottom: 8px;
+    border-bottom: 2px solid var(--dorado); display: inline-block;
   }
   .grupo-mes { margin-bottom: 32px; }
   .grupo-mes h3 {
-    font-size: 0.85em;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--texto-suave);
-    margin-bottom: 12px;
+    font-size: 0.85em; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1px; color: var(--texto-suave); margin-bottom: 12px;
   }
   .card {
-    background: var(--blanco);
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 14px;
-    box-shadow: var(--sombra);
+    background: var(--blanco); border-radius: 12px; padding: 20px;
+    margin-bottom: 14px; box-shadow: var(--sombra);
     border: 1px solid var(--gris-borde);
     transition: transform 0.15s, box-shadow 0.15s;
   }
@@ -99,8 +71,7 @@
     display: inline-flex; align-items: center; gap: 6px;
     padding: 10px 18px; border-radius: 8px;
     font-size: 0.9em; font-weight: 600;
-    text-decoration: none; border: none; cursor: pointer;
-    transition: all 0.15s;
+    text-decoration: none; border: none; cursor: pointer; transition: all 0.15s;
   }
   .btn-primario { background: var(--azul); color: white; }
   .btn-primario:hover { background: var(--azul-claro); }
@@ -108,8 +79,6 @@
   .btn-secundario:hover { background: #e2e8f0; }
   .btn-dorado { background: var(--dorado); color: white; }
   .btn-dorado:hover { background: #9a6f0a; }
-  .btn-peligro { background: #c53030; color: white; }
-  .btn-peligro:hover { background: #9b2c2c; }
   input, select, textarea {
     width: 100%; padding: 11px 14px; margin-bottom: 12px;
     border: 1px solid var(--gris-borde); border-radius: 8px;
@@ -126,9 +95,8 @@
     color: var(--texto-suave); margin-bottom: 4px;
   }
   .form-card {
-    background: var(--blanco); border-radius: 12px;
-    padding: 24px; box-shadow: var(--sombra);
-    border: 1px solid var(--gris-borde);
+    background: var(--blanco); border-radius: 12px; padding: 24px;
+    box-shadow: var(--sombra); border: 1px solid var(--gris-borde);
   }
   .hidden { display: none !important; }
   .mensaje {
@@ -144,85 +112,56 @@
     font-size: 0.75em; font-weight: 600;
     text-transform: uppercase; letter-spacing: 0.5px;
   }
-  .badge-rol { background: var(--dorado); color: white; }
-  .badge-eco { background: #27ae60; color: white; }
-  /* LOGIN */
   .login-wrapper {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, var(--azul) 0%, var(--azul-claro) 100%);
-    padding: 20px;
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, var(--azul) 0%, var(--azul-claro) 100%); padding: 20px;
   }
   .login-box {
-    background: white;
-    border-radius: 16px;
-    padding: 36px 28px;
-    max-width: 420px;
-    width: 100%;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    background: white; border-radius: 16px; padding: 36px 28px;
+    max-width: 420px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.3);
   }
-  .login-box h1 {
-    color: var(--azul);
-    font-size: 1.4em;
-    text-align: center;
-    margin-bottom: 4px;
-  }
-  .login-box .subtitulo {
-    text-align: center;
-    color: var(--texto-suave);
-    font-size: 0.9em;
-    margin-bottom: 24px;
-  }
+  .login-box h1 { color: var(--azul); font-size: 1.4em; text-align: center; margin-bottom: 4px; }
+  .login-box .subtitulo { text-align: center; color: var(--texto-suave); font-size: 0.9em; margin-bottom: 24px; }
   .login-tabs {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 20px;
-    background: #edf2f7;
-    padding: 4px;
-    border-radius: 10px;
+    display: flex; gap: 8px; margin-bottom: 20px;
+    background: #edf2f7; padding: 4px; border-radius: 10px;
   }
   .login-tabs button {
-    flex: 1;
-    background: none;
-    border: none;
-    padding: 10px;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 0.9em;
-    color: var(--texto-suave);
-    cursor: pointer;
+    flex: 1; background: none; border: none; padding: 10px;
+    border-radius: 8px; font-weight: 600; font-size: 0.9em;
+    color: var(--texto-suave); cursor: pointer;
   }
   .login-tabs button.active {
-    background: white;
-    color: var(--azul);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    background: white; color: var(--azul); box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   }
   .usuario-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(255,255,255,0.15);
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 0.85em;
-    margin-top: 10px;
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.15); padding: 6px 12px;
+    border-radius: 20px; font-size: 0.85em; margin-top: 10px;
   }
   .logout-btn {
-    background: rgba(255,255,255,0.2);
-    color: white;
-    border: 1px solid rgba(255,255,255,0.3);
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 0.8em;
-    cursor: pointer;
-    margin-left: 8px;
+    background: rgba(255,255,255,0.2); color: white;
+    border: 1px solid rgba(255,255,255,0.3); padding: 6px 14px;
+    border-radius: 20px; font-size: 0.8em; cursor: pointer; margin-left: 8px;
   }
   .logout-btn:hover { background: rgba(255,255,255,0.3); }
+  .calendario-dia {
+    background: white; border-radius: 10px; padding: 14px;
+    margin-bottom: 10px; border-left: 4px solid var(--dorado);
+    box-shadow: var(--sombra);
+  }
+  .calendario-fecha {
+    font-weight: 700; color: var(--azul); font-size: 0.95em;
+  }
+  .calendario-actividad { font-size: 0.9em; color: #475569; margin-top: 4px; }
+  .calendario-hora {
+    display: inline-block; background: var(--azul); color: white;
+    padding: 2px 8px; border-radius: 10px; font-size: 0.75em; font-weight: 600;
+    margin-right: 6px;
+  }
   @media (max-width: 600px) {
     .header h1 { font-size: 1.3em; }
-    .nav button { font-size: 0.8em; padding: 12px 4px; }
+    .nav button { font-size: 0.75em; padding: 12px 4px; }
     .card { padding: 16px; }
     .card-acciones { flex-direction: column; }
     .btn { justify-content: center; }
@@ -231,7 +170,7 @@
 </head>
 <body>
 
-<!-- ==================== LOGIN ==================== -->
+<!-- LOGIN -->
 <div id="pantalla-login" class="login-wrapper">
   <div class="login-box">
     <h1>Iglesia Bautista de Sola</h1>
@@ -244,40 +183,26 @@
 
     <div id="login-mensaje" class="mensaje"></div>
 
-    <!-- LOGIN MIEMBRO -->
     <div id="form-login-miembro">
       <label class="campo">Tu nombre completo</label>
       <input type="text" id="login-miembro-nombre" placeholder="Nombre y apellidos">
-
       <label class="campo">Contraseña</label>
       <input type="password" id="login-miembro-password" placeholder="Elige una contraseña">
-
-      <button class="btn btn-primario" style="width:100%; justify-content:center; margin-top:8px;" onclick="loginMiembro()">
-        Entrar
-      </button>
-      <p style="font-size:0.8em; color:var(--texto-suave); text-align:center; margin-top:12px;">
-        Si es tu primera vez, se creará tu cuenta automáticamente.
-      </p>
+      <button class="btn btn-primario" style="width:100%; justify-content:center; margin-top:8px;" onclick="loginMiembro()">Entrar</button>
+      <p style="font-size:0.8em; color:var(--texto-suave); text-align:center; margin-top:12px;">Si es tu primera vez, se creará tu cuenta automáticamente.</p>
     </div>
 
-    <!-- LOGIN ADMIN -->
     <div id="form-login-admin" class="hidden">
       <label class="campo">Selecciona tu nombre</label>
-      <select id="login-admin-nombre">
-        <option value="">-- Selecciona --</option>
-      </select>
-
+      <select id="login-admin-nombre"><option value="">-- Selecciona --</option></select>
       <label class="campo">Contraseña</label>
       <input type="password" id="login-admin-password" placeholder="Tu contraseña">
-
-      <button class="btn btn-primario" style="width:100%; justify-content:center; margin-top:8px;" onclick="loginAdmin()">
-        Entrar como administrador
-      </button>
+      <button class="btn btn-primario" style="width:100%; justify-content:center; margin-top:8px;" onclick="loginAdmin()">Entrar como administrador</button>
     </div>
   </div>
 </div>
 
-<!-- ==================== APP ==================== -->
+<!-- APP -->
 <div id="pantalla-app" class="hidden">
   <header class="header">
     <h1>Iglesia Bautista de Sola</h1>
@@ -290,47 +215,100 @@
 
   <nav class="nav">
     <button id="btn-sermones" class="active" onclick="mostrarSeccion('sermones')">Sermones</button>
+    <button id="btn-anuncios" onclick="mostrarSeccion('anuncios')">Anuncios</button>
+    <button id="btn-calendario" onclick="mostrarSeccion('calendario')">Calendario</button>
     <button id="btn-miembros" class="hidden" onclick="mostrarSeccion('miembros')">Miembros</button>
     <button id="btn-economia" class="hidden" onclick="mostrarSeccion('economia')">Economía</button>
   </nav>
 
   <div class="container">
 
+    <!-- SERMONES -->
     <section id="seccion-sermones">
       <h2 class="seccion-titulo">Sermones</h2>
       <div id="lista-sermones"></div>
-
       <div id="form-sermon-admin" class="hidden">
         <h2 class="seccion-titulo" style="margin-top:40px;">Publicar un sermón</h2>
         <div class="form-card">
           <div id="mensaje-sermon" class="mensaje"></div>
           <label class="campo">Título *</label>
-          <input type="text" id="sermon-titulo" placeholder="Ej: La fe que agrada a Dios">
+          <input type="text" id="sermon-titulo">
           <label class="campo">Predicador *</label>
-          <input type="text" id="sermon-predicador" placeholder="Ej: Pastor Rolando">
+          <input type="text" id="sermon-predicador">
           <label class="campo">Tema</label>
-          <input type="text" id="sermon-tema" placeholder="Ej: Fe, Esperanza">
+          <input type="text" id="sermon-tema">
           <label class="campo">Descripción</label>
           <textarea id="sermon-descripcion"></textarea>
           <label class="campo">Enlace externo (opcional)</label>
           <input type="url" id="sermon-enlace" placeholder="https://...">
           <label class="campo">O sube un audio (opcional)</label>
           <input type="file" id="sermon-archivo" accept="audio/*">
-          <button class="btn btn-primario" style="width:100%; justify-content:center;" onclick="publicarSermon()">
-            Publicar sermón
-          </button>
+          <button class="btn btn-primario" style="width:100%; justify-content:center;" onclick="publicarSermon()">Publicar sermón</button>
         </div>
       </div>
     </section>
 
+    <!-- ANUNCIOS -->
+    <section id="seccion-anuncios" class="hidden">
+      <h2 class="seccion-titulo">Anuncios</h2>
+      <div id="lista-anuncios"></div>
+      <div id="form-anuncio-admin" class="hidden">
+        <h2 class="seccion-titulo" style="margin-top:40px;">Publicar anuncio</h2>
+        <div class="form-card">
+          <div id="mensaje-anuncio" class="mensaje"></div>
+          <label class="campo">Título *</label>
+          <input type="text" id="anuncio-titulo">
+          <label class="campo">Contenido *</label>
+          <textarea id="anuncio-contenido" style="min-height:100px;"></textarea>
+          <button class="btn btn-primario" style="width:100%; justify-content:center;" onclick="publicarAnuncio()">Publicar anuncio</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CALENDARIO -->
+    <section id="seccion-calendario" class="hidden">
+      <h2 class="seccion-titulo">Calendario de la iglesia</h2>
+      <p style="color:var(--texto-suave); font-size:0.9em; margin-bottom:16px;">
+        <strong>Cultos fijos:</strong> Martes y Sábado 5:30 p.m. · Domingo 9:30 a.m.
+      </p>
+      <div id="lista-calendario"></div>
+      <div id="form-calendario-admin" class="hidden">
+        <h2 class="seccion-titulo" style="margin-top:40px;">Agregar actividad</h2>
+        <div class="form-card">
+          <div id="mensaje-calendario" class="mensaje"></div>
+          <label class="campo">Fecha *</label>
+          <input type="date" id="cal-fecha">
+          <label class="campo">Día *</label>
+          <select id="cal-dia">
+            <option value="Lunes">Lunes</option>
+            <option value="Martes">Martes</option>
+            <option value="Miércoles">Miércoles</option>
+            <option value="Jueves">Jueves</option>
+            <option value="Viernes">Viernes</option>
+            <option value="Sábado">Sábado</option>
+            <option value="Domingo">Domingo</option>
+          </select>
+          <label class="campo">Hora</label>
+          <input type="text" id="cal-hora" placeholder="Ej: 17:30">
+          <label class="campo">Departamento *</label>
+          <input type="text" id="cal-departamento" placeholder="Ej: Jóvenes">
+          <label class="campo">Actividad *</label>
+          <input type="text" id="cal-actividad" placeholder="Ej: Vigilia">
+          <label class="campo">Lugar</label>
+          <input type="text" id="cal-lugar" placeholder="Ej: Iglesia">
+          <button class="btn btn-primario" style="width:100%; justify-content:center;" onclick="agregarActividad()">Agregar actividad</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- MIEMBROS -->
     <section id="seccion-miembros" class="hidden">
       <h2 class="seccion-titulo">Miembros</h2>
       <div id="lista-miembros"></div>
-
       <h2 class="seccion-titulo" style="margin-top:40px;">Agregar miembro</h2>
       <div class="form-card">
         <label class="campo">Nombre completo *</label>
-        <input type="text" id="miembro-nombre" placeholder="Nombre y apellidos">
+        <input type="text" id="miembro-nombre">
         <label class="campo">Categoría</label>
         <select id="miembro-categoria">
           <option value="Caballeros">Caballeros</option>
@@ -340,16 +318,14 @@
           <option value="Tercera Edad">Tercera Edad</option>
           <option value="Líderes">Líderes</option>
         </select>
-        <button class="btn btn-primario" style="width:100%; justify-content:center;" onclick="agregarMiembro()">
-          Agregar miembro
-        </button>
+        <button class="btn btn-primario" style="width:100%; justify-content:center;" onclick="agregarMiembro()">Agregar miembro</button>
       </div>
     </section>
 
+    <!-- ECONOMÍA -->
     <section id="seccion-economia" class="hidden">
       <h2 class="seccion-titulo">Movimientos económicos</h2>
       <div id="lista-economia"></div>
-
       <div id="form-eco-admin" class="hidden">
         <h2 class="seccion-titulo" style="margin-top:40px;">Registrar movimiento</h2>
         <div class="form-card">
@@ -361,12 +337,10 @@
           <label class="campo">Detalle</label>
           <input type="text" id="eco-detalle">
           <label class="campo">Entrada (CUP)</label>
-          <input type="number" id="eco-entrada" step="0.01" min="0" placeholder="0.00">
+          <input type="number" id="eco-entrada" step="0.01" min="0">
           <label class="campo">Salida (CUP)</label>
-          <input type="number" id="eco-salida" step="0.01" min="0" placeholder="0.00">
-          <button class="btn btn-primario" style="width:100%; justify-content:center;" onclick="registrarEconomia()">
-            Registrar movimiento
-          </button>
+          <input type="number" id="eco-salida" step="0.01" min="0">
+          <button class="btn btn-primario" style="width:100%; justify-content:center;" onclick="registrarEconomia()">Registrar movimiento</button>
         </div>
       </div>
       <div id="aviso-sin-permiso-eco" class="hidden">
@@ -375,17 +349,15 @@
         </div>
       </div>
     </section>
+
   </div>
 </div>
 
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbzDDUHcgvr1bhOj2xSQobk4F-iJEFVtbtnQIg49jzWbunv8XOiks_479MSguoocshl4Hg/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbyDmTULHlthUTTv3VdzK5vlbUiux01KpZYv16BnWvphuN0dY5oGNlk3GdElbiIcTFt4XA/exec";
 
 let USUARIO_ACTUAL = null;
 
-// ==========================================
-// LOGIN
-// ==========================================
 function cambiarTabLogin(tipo) {
   document.getElementById('tab-miembro').classList.toggle('active', tipo === 'miembro');
   document.getElementById('tab-admin').classList.toggle('active', tipo === 'admin');
@@ -402,8 +374,7 @@ function cargarListaAdmins() {
       select.innerHTML = '<option value="">-- Selecciona --</option>';
       admins.forEach(a => {
         const opt = document.createElement('option');
-        opt.value = a;
-        opt.textContent = a;
+        opt.value = a; opt.textContent = a;
         select.appendChild(opt);
       });
     })
@@ -414,97 +385,60 @@ function loginMiembro() {
   const nombre = document.getElementById('login-miembro-nombre').value.trim();
   const password = document.getElementById('login-miembro-password').value;
   const msg = document.getElementById('login-mensaje');
+  if (!nombre || !password) { msg.className = 'mensaje error'; msg.textContent = 'Escribe tu nombre y una contraseña.'; return; }
 
-  if (!nombre || !password) {
-    msg.className = 'mensaje error';
-    msg.textContent = 'Escribe tu nombre y una contraseña.';
-    return;
-  }
+  const fd = new FormData();
+  fd.append('tipo', 'login'); fd.append('nombre', nombre); fd.append('password', password);
 
-  // Intentar login
-  const formData = new FormData();
-  formData.append('tipo', 'login');
-  formData.append('nombre', nombre);
-  formData.append('password', password);
-
-  fetch(API_URL, { method: 'POST', body: formData })
+  fetch(API_URL, { method: 'POST', body: fd })
     .then(r => r.json())
     .then(res => {
-      if (res.resultado === 'éxito') {
-        iniciarSesion(res.usuario);
-      } else if (res.mensaje && res.mensaje.includes("no encontrado")) {
-        // Registro automático
-        const fd = new FormData();
-        fd.append('tipo', 'registro');
-        fd.append('nombre', nombre);
-        fd.append('password', password);
-        fetch(API_URL, { method: 'POST', body: fd })
+      if (res.resultado === 'éxito') { iniciarSesion(res.usuario); }
+      else if (res.mensaje && res.mensaje.includes("no encontrado")) {
+        const fd2 = new FormData();
+        fd2.append('tipo', 'registro'); fd2.append('nombre', nombre); fd2.append('password', password);
+        fetch(API_URL, { method: 'POST', body: fd2 })
           .then(r => r.json())
           .then(res2 => {
-            if (res2.resultado === 'éxito') {
-              iniciarSesion(res2.usuario);
-            } else {
-              msg.className = 'mensaje error';
-              msg.textContent = res2.mensaje || 'Error al registrar.';
-            }
+            if (res2.resultado === 'éxito') iniciarSesion(res2.usuario);
+            else { msg.className = 'mensaje error'; msg.textContent = res2.mensaje || 'Error al registrar.'; }
           });
-      } else {
-        msg.className = 'mensaje error';
-        msg.textContent = res.mensaje || 'Error al iniciar sesión.';
-      }
+      } else { msg.className = 'mensaje error'; msg.textContent = res.mensaje || 'Error.'; }
     })
-    .catch(err => {
-      msg.className = 'mensaje error';
-      msg.textContent = 'Error de red: ' + err.message;
-    });
+    .catch(err => { msg.className = 'mensaje error'; msg.textContent = 'Error de red: ' + err.message; });
 }
 
 function loginAdmin() {
   const nombre = document.getElementById('login-admin-nombre').value;
   const password = document.getElementById('login-admin-password').value;
   const msg = document.getElementById('login-mensaje');
+  if (!nombre || !password) { msg.className = 'mensaje error'; msg.textContent = 'Selecciona tu nombre y escribe tu contraseña.'; return; }
 
-  if (!nombre || !password) {
-    msg.className = 'mensaje error';
-    msg.textContent = 'Selecciona tu nombre y escribe tu contraseña.';
-    return;
-  }
-
-  const formData = new FormData();
-  formData.append('tipo', 'login');
-  formData.append('nombre', nombre);
-  formData.append('password', password);
-
-  fetch(API_URL, { method: 'POST', body: formData })
+  const fd = new FormData();
+  fd.append('tipo', 'login'); fd.append('nombre', nombre); fd.append('password', password);
+  fetch(API_URL, { method: 'POST', body: fd })
     .then(r => r.json())
     .then(res => {
-      if (res.resultado === 'éxito') {
-        iniciarSesion(res.usuario);
-      } else {
-        msg.className = 'mensaje error';
-        msg.textContent = res.mensaje || 'Credenciales incorrectas.';
-      }
+      if (res.resultado === 'éxito') iniciarSesion(res.usuario);
+      else { msg.className = 'mensaje error'; msg.textContent = res.mensaje || 'Credenciales incorrectas.'; }
     })
-    .catch(err => {
-      msg.className = 'mensaje error';
-      msg.textContent = 'Error de red: ' + err.message;
-    });
+    .catch(err => { msg.className = 'mensaje error'; msg.textContent = 'Error de red: ' + err.message; });
 }
 
 function iniciarSesion(usuario) {
   USUARIO_ACTUAL = usuario;
   localStorage.setItem('usuario', JSON.stringify(usuario));
-
   document.getElementById('pantalla-login').classList.add('hidden');
   document.getElementById('pantalla-app').classList.remove('hidden');
-
   const rolTexto = usuario.puedeEconomia ? 'Admin Economía' : (usuario.esAdmin ? 'Administrador' : 'Miembro');
   document.getElementById('info-usuario').textContent = `${usuario.nombre} · ${rolTexto}`;
 
-  // Mostrar u ocultar botones según permisos
-  document.getElementById('btn-miembros').classList.toggle('hidden', !usuario.esAdmin && !usuario.puedeEconomia);
-  document.getElementById('btn-economia').classList.toggle('hidden', !usuario.esAdmin && !usuario.puedeEconomia);
-  document.getElementById('form-sermon-admin').classList.toggle('hidden', !usuario.esAdmin && !usuario.puedeEconomia);
+  const puedeVerAdmin = usuario.esAdmin || usuario.puedeEconomia;
+  document.getElementById('btn-miembros').classList.toggle('hidden', !puedeVerAdmin);
+  document.getElementById('btn-economia').classList.toggle('hidden', !puedeVerAdmin);
+  document.getElementById('form-sermon-admin').classList.toggle('hidden', !puedeVerAdmin);
+  document.getElementById('form-anuncio-admin').classList.toggle('hidden', !puedeVerAdmin);
+  document.getElementById('form-calendario-admin').classList.toggle('hidden', !puedeVerAdmin);
   document.getElementById('form-eco-admin').classList.toggle('hidden', !usuario.puedeEconomia);
   document.getElementById('aviso-sin-permiso-eco').classList.toggle('hidden', usuario.puedeEconomia);
 
@@ -512,106 +446,75 @@ function iniciarSesion(usuario) {
 }
 
 function cerrarSesion() {
-  USUARIO_ACTUAL = null;
-  localStorage.removeItem('usuario');
+  USUARIO_ACTUAL = null; localStorage.removeItem('usuario');
   document.getElementById('pantalla-app').classList.add('hidden');
   document.getElementById('pantalla-login').classList.remove('hidden');
-  document.getElementById('login-miembro-nombre').value = '';
-  document.getElementById('login-miembro-password').value = '';
-  document.getElementById('login-admin-password').value = '';
 }
 
-// ==========================================
-// NAVEGACIÓN
-// ==========================================
 function mostrarSeccion(nombre) {
-  ['sermones', 'miembros', 'economia'].forEach(s => {
+  ['sermones','anuncios','calendario','miembros','economia'].forEach(s => {
     document.getElementById('seccion-' + s).classList.add('hidden');
-    const btn = document.getElementById('btn-' + s);
-    if (btn) btn.classList.remove('active');
+    const b = document.getElementById('btn-' + s); if (b) b.classList.remove('active');
   });
   document.getElementById('seccion-' + nombre).classList.remove('hidden');
-  const btn = document.getElementById('btn-' + nombre);
-  if (btn) btn.classList.add('active');
-
+  const b = document.getElementById('btn-' + nombre); if (b) b.classList.add('active');
   if (nombre === 'sermones') cargarSermones();
+  if (nombre === 'anuncios') cargarAnuncios();
+  if (nombre === 'calendario') cargarCalendario();
   if (nombre === 'miembros') cargarMiembros();
   if (nombre === 'economia') cargarEconomia();
 }
 
-// ==========================================
-// UTILIDADES
-// ==========================================
 function formatearFecha(fecha) {
   if (!fecha) return '';
   const d = new Date(fecha);
   if (isNaN(d.getTime())) return String(fecha);
   return d.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
 }
-
 function claveMes(fecha) {
   const d = new Date(fecha);
   if (isNaN(d.getTime())) return 'Sin fecha';
-  const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-  return meses[d.getMonth()] + ' ' + d.getFullYear();
+  const m = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  return m[d.getMonth()] + ' ' + d.getFullYear();
+}
+function escaparHTML(t) {
+  if (t === null || t === undefined) return '';
+  return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
 
-function escaparHTML(texto) {
-  if (texto === null || texto === undefined) return '';
-  return String(texto)
-    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-}
-
-// ==========================================
-// SERMONES
-// ==========================================
 function cargarSermones() {
   const cont = document.getElementById("lista-sermones");
   cont.innerHTML = '<p class="vacio">Cargando sermones...</p>';
-
   fetch(API_URL + "?tipo=sermones&usuario=" + encodeURIComponent(USUARIO_ACTUAL?.nombre || ""))
     .then(r => r.json())
     .then(sermones => {
-      if (!Array.isArray(sermones) || sermones.length === 0) {
-        cont.innerHTML = '<p class="vacio">Aún no hay sermones publicados.</p>';
-        return;
-      }
-      sermones.sort((a, b) => new Date(b.Fecha) - new Date(a.Fecha));
-      const grupos = {};
-      sermones.forEach(s => {
-        const clave = claveMes(s.Fecha);
-        if (!grupos[clave]) grupos[clave] = [];
-        grupos[clave].push(s);
-      });
+      if (!Array.isArray(sermones) || sermones.length === 0) { cont.innerHTML = '<p class="vacio">Aún no hay sermones publicados.</p>'; return; }
+      sermones.sort((a,b) => new Date(b.Fecha) - new Date(a.Fecha));
+      const g = {}; sermones.forEach(s => { const k = claveMes(s.Fecha); if (!g[k]) g[k] = []; g[k].push(s); });
       let html = '';
-      Object.keys(grupos).forEach(mes => {
+      Object.keys(g).forEach(mes => {
         html += `<div class="grupo-mes"><h3>${mes}</h3>`;
-        grupos[mes].forEach(s => {
+        g[mes].forEach(s => {
           const enlace = s.Enlace || s.EnlaceAudio || '';
-          const tieneEnlace = enlace && enlace.trim() !== '';
-          html += `
-            <div class="card">
-              <div class="card-titulo">${escaparHTML(s.Titulo) || 'Sin título'}</div>
-              <div class="card-meta">
-                <span>👤 ${escaparHTML(s.Predicador) || 'No indicado'}</span>
-                <span>📅 ${formatearFecha(s.Fecha)}</span>
-                ${s.Tema ? `<span class="badge">${escaparHTML(s.Tema)}</span>` : ''}
-              </div>
-              ${s.Descripcion ? `<p class="card-desc">${escaparHTML(s.Descripcion)}</p>` : ''}
-              <div class="card-acciones">
-                ${tieneEnlace ? `<a href="${escaparHTML(enlace)}" target="_blank" rel="noopener" class="btn btn-dorado">▶ Ver sermón</a>` : ''}
-              </div>
-            </div>`;
+          const tiene = enlace && enlace.trim() !== '';
+          html += `<div class="card">
+            <div class="card-titulo">${escaparHTML(s.Titulo) || 'Sin título'}</div>
+            <div class="card-meta">
+              <span>👤 ${escaparHTML(s.Predicador) || 'No indicado'}</span>
+              <span>📅 ${formatearFecha(s.Fecha)}</span>
+              ${s.Tema ? `<span class="badge">${escaparHTML(s.Tema)}</span>` : ''}
+            </div>
+            ${s.Descripcion ? `<p class="card-desc">${escaparHTML(s.Descripcion)}</p>` : ''}
+            <div class="card-acciones">
+              ${tiene ? `<a href="${escaparHTML(enlace)}" target="_blank" rel="noopener" class="btn btn-dorado">▶ Ver sermón</a>` : ''}
+            </div>
+          </div>`;
         });
         html += `</div>`;
       });
       cont.innerHTML = html;
     })
-    .catch(err => {
-      console.error(err);
-      cont.innerHTML = '<p class="vacio">Error al cargar los sermones.</p>';
-    });
+    .catch(err => { console.error(err); cont.innerHTML = '<p class="vacio">Error al cargar sermones.</p>'; });
 }
 
 function publicarSermon() {
@@ -623,126 +526,173 @@ function publicarSermon() {
   const enlace = document.getElementById('sermon-enlace').value.trim();
   const archivo = document.getElementById('sermon-archivo').files[0];
   const msg = document.getElementById('mensaje-sermon');
-
-  if (!titulo || !predicador) {
-    msg.className = 'mensaje error';
-    msg.textContent = 'Título y predicador son obligatorios.';
-    return;
-  }
+  if (!titulo || !predicador) { msg.className = 'mensaje error'; msg.textContent = 'Título y predicador obligatorios.'; return; }
 
   if (archivo) {
     const reader = new FileReader();
     reader.readAsArrayBuffer(archivo);
     reader.onload = function(ev) {
       const bytes = Array.from(new Uint8Array(ev.target.result));
-      const qs = new URLSearchParams({
-        accion: 'subirAudio',
-        filename: archivo.name,
-        mimeType: archivo.type
-      });
+      const qs = new URLSearchParams({ accion: 'subirAudio', filename: archivo.name, mimeType: archivo.type });
       fetch(API_URL + '?' + qs, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          bytes, filename: archivo.name, mimeType: archivo.type,
-          titulo, predicador, tema, descripcion,
-          usuario: USUARIO_ACTUAL.nombre
-        })
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ bytes, filename: archivo.name, mimeType: archivo.type, titulo, predicador, tema, descripcion, usuario: USUARIO_ACTUAL.nombre })
       })
       .then(r => r.json())
       .then(res => {
-        if (res.resultado === 'éxito') {
-          msg.className = 'mensaje exito';
-          msg.textContent = 'Sermón publicado con audio.';
-          limpiarFormSermon();
-          cargarSermones();
-        } else {
-          msg.className = 'mensaje error';
-          msg.textContent = 'Error: ' + (res.mensaje || '');
-        }
+        if (res.resultado === 'éxito') { msg.className = 'mensaje exito'; msg.textContent = 'Sermón publicado con audio.'; limpiarFormSermon(); cargarSermones(); }
+        else { msg.className = 'mensaje error'; msg.textContent = 'Error: ' + (res.mensaje || ''); }
       });
     };
   } else {
     const fd = new FormData();
-    fd.append('tipo', 'sermon');
-    fd.append('usuario', USUARIO_ACTUAL.nombre);
-    fd.append('titulo', titulo);
-    fd.append('predicador', predicador);
-    fd.append('tema', tema);
-    fd.append('descripcion', descripcion);
-    fd.append('enlaceAudio', enlace);
+    fd.append('tipo','sermon'); fd.append('usuario', USUARIO_ACTUAL.nombre);
+    fd.append('titulo', titulo); fd.append('predicador', predicador);
+    fd.append('tema', tema); fd.append('descripcion', descripcion); fd.append('enlaceAudio', enlace);
     fetch(API_URL, { method: 'POST', body: fd })
       .then(r => r.json())
       .then(res => {
-        if (res.resultado === 'éxito') {
-          msg.className = 'mensaje exito';
-          msg.textContent = 'Sermón publicado.';
-          limpiarFormSermon();
-          cargarSermones();
-        } else {
-          msg.className = 'mensaje error';
-          msg.textContent = 'Error: ' + (res.mensaje || '');
-        }
+        if (res.resultado === 'éxito') { msg.className = 'mensaje exito'; msg.textContent = 'Sermón publicado.'; limpiarFormSermon(); cargarSermones(); }
+        else { msg.className = 'mensaje error'; msg.textContent = 'Error: ' + (res.mensaje || ''); }
       });
   }
 }
-
 function limpiarFormSermon() {
-  ['sermon-titulo','sermon-predicador','sermon-tema','sermon-descripcion','sermon-enlace'].forEach(id => {
-    document.getElementById(id).value = '';
-  });
+  ['sermon-titulo','sermon-predicador','sermon-tema','sermon-descripcion','sermon-enlace'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('sermon-archivo').value = '';
 }
 
-// ==========================================
-// MIEMBROS
-// ==========================================
-function cargarMiembros() {
-  if (!USUARIO_ACTUAL) return;
-  const cont = document.getElementById("lista-miembros");
-  cont.innerHTML = '<p class="vacio">Cargando miembros...</p>';
-
-  fetch(API_URL + "?tipo=miembros&usuario=" + encodeURIComponent(USUARIO_ACTUAL.nombre))
+function cargarAnuncios() {
+  const cont = document.getElementById("lista-anuncios");
+  cont.innerHTML = '<p class="vacio">Cargando anuncios...</p>';
+  fetch(API_URL + "?tipo=anuncios&usuario=" + encodeURIComponent(USUARIO_ACTUAL?.nombre || ""))
     .then(r => r.json())
-    .then(miembros => {
-      if (miembros.error) {
-        cont.innerHTML = '<p class="vacio">' + escaparHTML(miembros.error) + '</p>';
-        return;
-      }
-      if (!Array.isArray(miembros) || miembros.length === 0) {
-        cont.innerHTML = '<p class="vacio">No hay miembros registrados.</p>';
-        return;
-      }
-      const grupos = {};
-      miembros.forEach(m => {
-        const cat = m.Categoria || 'Sin categoría';
-        if (!grupos[cat]) grupos[cat] = [];
-        grupos[cat].push(m);
-      });
+    .then(anuncios => {
+      if (!Array.isArray(anuncios) || anuncios.length === 0) { cont.innerHTML = '<p class="vacio">No hay anuncios publicados.</p>'; return; }
+      anuncios.sort((a,b) => new Date(b.Fecha) - new Date(a.Fecha));
       let html = '';
-      Object.keys(grupos).sort().forEach(cat => {
-        html += `<div class="grupo-mes"><h3>${escaparHTML(cat)} (${grupos[cat].length})</h3>`;
-        grupos[cat].forEach(m => {
-          html += `
-            <div class="card">
-              <div class="card-titulo">${escaparHTML(m.Nombre)}</div>
-              <div class="card-meta">
-                ${m.Conversion ? '<span>✓ Conversión</span>' : ''}
-                ${m.Comunion ? '<span>✓ Comunión</span>' : ''}
-                ${m.Crecimiento ? '<span>✓ Crecimiento</span>' : ''}
-                ${m.Compromiso ? '<span>✓ Compromiso</span>' : ''}
-                ${m.Comision ? '<span>✓ Comisión</span>' : ''}
-              </div>
-            </div>`;
+      anuncios.forEach(a => {
+        html += `<div class="card">
+          <div class="card-titulo">${escaparHTML(a.Titulo)}</div>
+          <div class="card-meta">
+            <span>📅 ${formatearFecha(a.Fecha)}</span>
+            ${a.Autor ? `<span>✍ ${escaparHTML(a.Autor)}</span>` : ''}
+          </div>
+          <p class="card-desc">${escaparHTML(a.Contenido)}</p>
+        </div>`;
+      });
+      cont.innerHTML = html;
+    })
+    .catch(err => { console.error(err); cont.innerHTML = '<p class="vacio">Error al cargar anuncios.</p>'; });
+}
+
+function publicarAnuncio() {
+  if (!USUARIO_ACTUAL) return;
+  const titulo = document.getElementById('anuncio-titulo').value.trim();
+  const contenido = document.getElementById('anuncio-contenido').value.trim();
+  const msg = document.getElementById('mensaje-anuncio');
+  if (!titulo || !contenido) { msg.className = 'mensaje error'; msg.textContent = 'Título y contenido obligatorios.'; return; }
+
+  const fd = new FormData();
+  fd.append('tipo','anuncio'); fd.append('usuario', USUARIO_ACTUAL.nombre);
+  fd.append('titulo', titulo); fd.append('contenido', contenido);
+  fetch(API_URL, { method: 'POST', body: fd })
+    .then(r => r.json())
+    .then(res => {
+      if (res.resultado === 'éxito') {
+        msg.className = 'mensaje exito'; msg.textContent = 'Anuncio publicado.';
+        document.getElementById('anuncio-titulo').value = '';
+        document.getElementById('anuncio-contenido').value = '';
+        cargarAnuncios();
+      } else { msg.className = 'mensaje error'; msg.textContent = 'Error: ' + (res.mensaje || ''); }
+    });
+}
+
+function cargarCalendario() {
+  const cont = document.getElementById("lista-calendario");
+  cont.innerHTML = '<p class="vacio">Cargando calendario...</p>';
+  fetch(API_URL + "?tipo=calendario&usuario=" + encodeURIComponent(USUARIO_ACTUAL?.nombre || ""))
+    .then(r => r.json())
+    .then(eventos => {
+      if (!Array.isArray(eventos) || eventos.length === 0) { cont.innerHTML = '<p class="vacio">No hay actividades en el calendario.</p>'; return; }
+      eventos.sort((a,b) => new Date(a.Fecha) - new Date(b.Fecha));
+      const g = {}; eventos.forEach(e => { const k = claveMes(e.Fecha); if (!g[k]) g[k] = []; g[k].push(e); });
+      let html = '';
+      Object.keys(g).forEach(mes => {
+        html += `<div class="grupo-mes"><h3>${mes}</h3>`;
+        g[mes].forEach(e => {
+          html += `<div class="calendario-dia">
+            <div class="calendario-fecha">${formatearFecha(e.Fecha)} · ${escaparHTML(e.Dia)}</div>
+            <div class="calendario-actividad">
+              ${e.Hora ? `<span class="calendario-hora">${escaparHTML(e.Hora)}</span>` : ''}
+              <strong>${escaparHTML(e.Departamento)}:</strong> ${escaparHTML(e.Actividad)}
+              ${e.Lugar ? ` — <em>${escaparHTML(e.Lugar)}</em>` : ''}
+            </div>
+          </div>`;
         });
         html += `</div>`;
       });
       cont.innerHTML = html;
     })
-    .catch(err => {
-      console.error(err);
-      cont.innerHTML = '<p class="vacio">Error al cargar miembros.</p>';
+    .catch(err => { console.error(err); cont.innerHTML = '<p class="vacio">Error al cargar calendario.</p>'; });
+}
+
+function agregarActividad() {
+  if (!USUARIO_ACTUAL) return;
+  const fecha = document.getElementById('cal-fecha').value;
+  const dia = document.getElementById('cal-dia').value;
+  const hora = document.getElementById('cal-hora').value.trim();
+  const departamento = document.getElementById('cal-departamento').value.trim();
+  const actividad = document.getElementById('cal-actividad').value.trim();
+  const lugar = document.getElementById('cal-lugar').value.trim();
+  const msg = document.getElementById('mensaje-calendario');
+  if (!fecha || !departamento || !actividad) { msg.className = 'mensaje error'; msg.textContent = 'Fecha, departamento y actividad obligatorios.'; return; }
+
+  const fd = new FormData();
+  fd.append('tipo','calendario'); fd.append('usuario', USUARIO_ACTUAL.nombre);
+  fd.append('fecha', fecha); fd.append('dia', dia); fd.append('hora', hora);
+  fd.append('departamento', departamento); fd.append('actividad', actividad); fd.append('lugar', lugar);
+  fetch(API_URL, { method: 'POST', body: fd })
+    .then(r => r.json())
+    .then(res => {
+      if (res.resultado === 'éxito') {
+        msg.className = 'mensaje exito'; msg.textContent = 'Actividad agregada.';
+        ['cal-fecha','cal-hora','cal-departamento','cal-actividad','cal-lugar'].forEach(id => document.getElementById(id).value = '');
+        cargarCalendario();
+      } else { msg.className = 'mensaje error'; msg.textContent = 'Error: ' + (res.mensaje || ''); }
     });
+}
+
+function cargarMiembros() {
+  if (!USUARIO_ACTUAL) return;
+  const cont = document.getElementById("lista-miembros");
+  cont.innerHTML = '<p class="vacio">Cargando miembros...</p>';
+  fetch(API_URL + "?tipo=miembros&usuario=" + encodeURIComponent(USUARIO_ACTUAL.nombre))
+    .then(r => r.json())
+    .then(miembros => {
+      if (miembros.error) { cont.innerHTML = '<p class="vacio">' + escaparHTML(miembros.error) + '</p>'; return; }
+      if (!Array.isArray(miembros) || miembros.length === 0) { cont.innerHTML = '<p class="vacio">No hay miembros.</p>'; return; }
+      const g = {}; miembros.forEach(m => { const c = m.Categoria || 'Sin categoría'; if (!g[c]) g[c] = []; g[c].push(m); });
+      let html = '';
+      Object.keys(g).sort().forEach(cat => {
+        html += `<div class="grupo-mes"><h3>${escaparHTML(cat)} (${g[cat].length})</h3>`;
+        g[cat].forEach(m => {
+          html += `<div class="card">
+            <div class="card-titulo">${escaparHTML(m.Nombre)}</div>
+            <div class="card-meta">
+              ${m.Conversion ? '<span>✓ Conversión</span>' : ''}
+              ${m.Comunion ? '<span>✓ Comunión</span>' : ''}
+              ${m.Crecimiento ? '<span>✓ Crecimiento</span>' : ''}
+              ${m.Compromiso ? '<span>✓ Compromiso</span>' : ''}
+              ${m.Comision ? '<span>✓ Comisión</span>' : ''}
+            </div>
+          </div>`;
+        });
+        html += `</div>`;
+      });
+      cont.innerHTML = html;
+    })
+    .catch(err => { console.error(err); cont.innerHTML = '<p class="vacio">Error al cargar miembros.</p>'; });
 }
 
 function agregarMiembro() {
@@ -750,60 +700,33 @@ function agregarMiembro() {
   const nombre = document.getElementById('miembro-nombre').value.trim();
   const categoria = document.getElementById('miembro-categoria').value;
   if (!nombre) return alert('Escribe el nombre.');
-
   const fd = new FormData();
-  fd.append('tipo', 'miembro');
-  fd.append('usuario', USUARIO_ACTUAL.nombre);
-  fd.append('nombre', nombre);
-  fd.append('categoria', categoria);
-
+  fd.append('tipo','miembro'); fd.append('usuario', USUARIO_ACTUAL.nombre);
+  fd.append('nombre', nombre); fd.append('categoria', categoria);
   fetch(API_URL, { method: 'POST', body: fd })
     .then(r => r.json())
     .then(res => {
-      if (res.resultado === 'éxito') {
-        document.getElementById('miembro-nombre').value = '';
-        cargarMiembros();
-      } else {
-        alert('Error: ' + res.mensaje);
-      }
+      if (res.resultado === 'éxito') { document.getElementById('miembro-nombre').value = ''; cargarMiembros(); }
+      else alert('Error: ' + res.mensaje);
     });
 }
 
-// ==========================================
-// ECONOMÍA
-// ==========================================
 function cargarEconomia() {
   if (!USUARIO_ACTUAL) return;
   const cont = document.getElementById("lista-economia");
   cont.innerHTML = '<p class="vacio">Cargando movimientos...</p>';
-
   fetch(API_URL + "?tipo=economia&usuario=" + encodeURIComponent(USUARIO_ACTUAL.nombre))
     .then(r => r.json())
     .then(movs => {
-      if (movs.error) {
-        cont.innerHTML = '<p class="vacio">' + escaparHTML(movs.error) + '</p>';
-        return;
-      }
-      if (!Array.isArray(movs) || movs.length === 0) {
-        cont.innerHTML = '<p class="vacio">No hay movimientos registrados.</p>';
-        return;
-      }
-      movs.sort((a, b) => new Date(b.Fecha) - new Date(a.Fecha));
-      const grupos = {};
-      movs.forEach(m => {
-        const clave = claveMes(m.Fecha);
-        if (!grupos[clave]) grupos[clave] = [];
-        grupos[clave].push(m);
-      });
+      if (movs.error) { cont.innerHTML = '<p class="vacio">' + escaparHTML(movs.error) + '</p>'; return; }
+      if (!Array.isArray(movs) || movs.length === 0) { cont.innerHTML = '<p class="vacio">No hay movimientos.</p>'; return; }
+      movs.sort((a,b) => new Date(b.Fecha) - new Date(a.Fecha));
+      const g = {}; movs.forEach(m => { const k = claveMes(m.Fecha); if (!g[k]) g[k] = []; g[k].push(m); });
       let html = '';
-      Object.keys(grupos).forEach(mes => {
+      Object.keys(g).forEach(mes => {
         let te = 0, ts = 0;
-        grupos[mes].forEach(m => {
-          te += Number(m.Entrada) || 0;
-          ts += Number(m.Salida) || 0;
-        });
-        html += `<div class="grupo-mes">
-          <h3>${mes}</h3>
+        g[mes].forEach(m => { te += Number(m.Entrada) || 0; ts += Number(m.Salida) || 0; });
+        html += `<div class="grupo-mes"><h3>${mes}</h3>
           <div class="card" style="background:#f0f7ff; border-color:#bcd4f0;">
             <div class="card-meta" style="justify-content:space-between; margin:0;">
               <span style="color:#27ae60; font-weight:700;">+ ${te.toLocaleString('es-ES')} CUP</span>
@@ -811,71 +734,51 @@ function cargarEconomia() {
               <span style="color:var(--azul); font-weight:700;">= ${(te - ts).toLocaleString('es-ES')} CUP</span>
             </div>
           </div>`;
-        grupos[mes].forEach(m => {
-          html += `
-            <div class="card">
-              <div class="card-titulo">${escaparHTML(m.Concepto) || 'Sin concepto'}</div>
-              <div class="card-meta">
-                <span>📅 ${formatearFecha(m.Fecha)}</span>
-                ${m.Detalle ? `<span>${escaparHTML(m.Detalle)}</span>` : ''}
-              </div>
-              <div style="display:flex; gap:16px; font-weight:700;">
-                ${m.Entrada ? `<span style="color:#27ae60;">Entrada: ${Number(m.Entrada).toLocaleString('es-ES')} CUP</span>` : ''}
-                ${m.Salida ? `<span style="color:#c0392b;">Salida: ${Number(m.Salida).toLocaleString('es-ES')} CUP</span>` : ''}
-              </div>
-            </div>`;
+        g[mes].forEach(m => {
+          html += `<div class="card">
+            <div class="card-titulo">${escaparHTML(m.Concepto) || 'Sin concepto'}</div>
+            <div class="card-meta">
+              <span>📅 ${formatearFecha(m.Fecha)}</span>
+              ${m.Detalle ? `<span>${escaparHTML(m.Detalle)}</span>` : ''}
+            </div>
+            <div style="display:flex; gap:16px; font-weight:700;">
+              ${m.Entrada ? `<span style="color:#27ae60;">Entrada: ${Number(m.Entrada).toLocaleString('es-ES')} CUP</span>` : ''}
+              ${m.Salida ? `<span style="color:#c0392b;">Salida: ${Number(m.Salida).toLocaleString('es-ES')} CUP</span>` : ''}
+            </div>
+          </div>`;
         });
         html += `</div>`;
       });
       cont.innerHTML = html;
     })
-    .catch(err => {
-      console.error(err);
-      cont.innerHTML = '<p class="vacio">Error al cargar economía.</p>';
-    });
+    .catch(err => { console.error(err); cont.innerHTML = '<p class="vacio">Error al cargar economía.</p>'; });
 }
 
 function registrarEconomia() {
   if (!USUARIO_ACTUAL || !USUARIO_ACTUAL.puedeEconomia) return;
   const concepto = document.getElementById('eco-concepto').value.trim();
   if (!concepto) return alert('Escribe un concepto.');
-
   const fd = new FormData();
-  fd.append('tipo', 'economia');
-  fd.append('usuario', USUARIO_ACTUAL.nombre);
+  fd.append('tipo','economia'); fd.append('usuario', USUARIO_ACTUAL.nombre);
   fd.append('fecha', document.getElementById('eco-fecha').value || new Date().toISOString().split('T')[0]);
   fd.append('concepto', concepto);
   fd.append('detalle', document.getElementById('eco-detalle').value.trim());
   fd.append('entrada', document.getElementById('eco-entrada').value || 0);
   fd.append('salida', document.getElementById('eco-salida').value || 0);
-
   fetch(API_URL, { method: 'POST', body: fd })
     .then(r => r.json())
     .then(res => {
       if (res.resultado === 'éxito') {
-        ['eco-concepto','eco-detalle','eco-entrada','eco-salida'].forEach(id => {
-          document.getElementById(id).value = '';
-        });
+        ['eco-concepto','eco-detalle','eco-entrada','eco-salida'].forEach(id => document.getElementById(id).value = '');
         cargarEconomia();
-      } else {
-        alert('Error: ' + res.mensaje);
-      }
+      } else alert('Error: ' + res.mensaje);
     });
 }
 
-// ==========================================
-// INICIO
-// ==========================================
 document.addEventListener('DOMContentLoaded', () => {
   cargarListaAdmins();
   const guardado = localStorage.getItem('usuario');
-  if (guardado) {
-    try {
-      iniciarSesion(JSON.parse(guardado));
-    } catch(e) {
-      localStorage.removeItem('usuario');
-    }
-  }
+  if (guardado) { try { iniciarSesion(JSON.parse(guardado)); } catch(e) { localStorage.removeItem('usuario'); } }
 });
 </script>
 </body>
