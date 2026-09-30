@@ -1,353 +1,525 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Iglesia Bautista de Sola</title>
-  <style>
-    :root {
-      --azul: #1e3a5f;
-      --azul-claro: #2c5282;
-      --dorado: #b8860b;
-      --gris-fondo: #f7f8fa;
-      --gris-borde: #e2e8f0;
-      --texto: #1a202c;
-      --texto-suave: #64748b;
-      --blanco: #ffffff;
-      --sombra: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05);
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-      background: var(--gris-fondo);
-      color: var(--texto);
-      line-height: 1.6;
-      padding-bottom: 40px;
-    }
-    .header {
-      background: linear-gradient(135deg, var(--azul) 0%, var(--azul-claro) 100%);
-      color: white;
-      padding: 32px 16px 24px;
-      text-align: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    }
-    .header h1 {
-      font-size: 1.6em;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-    }
-    .header p {
-      font-size: 0.9em;
-      opacity: 0.85;
-      margin-top: 4px;
-    }
-    .nav {
-      display: flex;
-      justify-content: center;
-      gap: 4px;
-      background: var(--blanco);
-      border-bottom: 1px solid var(--gris-borde);
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-    }
-    .nav button {
-      flex: 1;
-      max-width: 180px;
-      background: none;
-      border: none;
-      padding: 16px 8px;
-      font-size: 0.95em;
-      font-weight: 600;
-      color: var(--texto-suave);
-      cursor: pointer;
-      border-bottom: 3px solid transparent;
-      transition: all 0.2s;
-    }
-    .nav button.active {
-      color: var(--azul);
-      border-bottom-color: var(--dorado);
-    }
-    .nav button:hover { color: var(--azul-claro); }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 24px 16px;
-    }
-    .seccion-titulo {
-      font-size: 1.3em;
-      font-weight: 700;
-      color: var(--azul);
-      margin: 28px 0 16px;
-      padding-bottom: 8px;
-      border-bottom: 2px solid var(--dorado);
-      display: inline-block;
-    }
-    .grupo-mes {
-      margin-bottom: 32px;
-    }
-    .grupo-mes h3 {
-      font-size: 0.85em;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--texto-suave);
-      margin-bottom: 12px;
-    }
-    .card {
-      background: var(--blanco);
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 14px;
-      box-shadow: var(--sombra);
-      border: 1px solid var(--gris-borde);
-      transition: transform 0.15s, box-shadow 0.15s;
-    }
-    .card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-    }
-    .card-titulo {
-      font-size: 1.15em;
-      font-weight: 700;
-      color: var(--azul);
-      margin-bottom: 4px;
-    }
-    .card-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      font-size: 0.85em;
-      color: var(--texto-suave);
-      margin-bottom: 10px;
-    }
-    .card-meta span {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .card-desc {
-      font-size: 0.95em;
-      color: #475569;
-      margin-bottom: 14px;
-    }
-    .card-acciones {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 10px 18px;
-      border-radius: 8px;
-      font-size: 0.9em;
-      font-weight: 600;
-      text-decoration: none;
-      border: none;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .btn-primario {
-      background: var(--azul);
-      color: white;
-    }
-    .btn-primario:hover { background: var(--azul-claro); }
-    .btn-secundario {
-      background: #edf2f7;
-      color: var(--azul);
-    }
-    .btn-secundario:hover { background: #e2e8f0; }
-    .btn-dorado {
-      background: var(--dorado);
-      color: white;
-    }
-    .btn-dorado:hover { background: #9a6f0a; }
-    input, select, textarea {
-      width: 100%;
-      padding: 11px 14px;
-      margin-bottom: 12px;
-      border: 1px solid var(--gris-borde);
-      border-radius: 8px;
-      font-size: 0.95em;
-      font-family: inherit;
-      background: var(--blanco);
-      transition: border-color 0.15s;
-    }
-    input:focus, select:focus, textarea:focus {
-      outline: none;
-      border-color: var(--azul-claro);
-      box-shadow: 0 0 0 3px rgba(44,82,130,0.1);
-    }
-    textarea { resize: vertical; min-height: 70px; }
-    label.campo {
-      display: block;
-      font-size: 0.85em;
-      font-weight: 600;
-      color: var(--texto-suave);
-      margin-bottom: 4px;
-    }
-    .form-card {
-      background: var(--blanco);
-      border-radius: 12px;
-      padding: 24px;
-      box-shadow: var(--sombra);
-      border: 1px solid var(--gris-borde);
-    }
-    .hidden { display: none !important; }
-    .mensaje {
-      padding: 12px 16px;
-      border-radius: 8px;
-      margin-bottom: 16px;
-      display: none;
-      font-size: 0.9em;
-      font-weight: 500;
-    }
-    .mensaje.exito { background: #f0fff4; color: #22543d; border: 1px solid #9ae6b4; display: block; }
-    .mensaje.error { background: #fff5f5; color: #742a2a; border: 1px solid #feb2b2; display: block; }
-    .vacio {
-      text-align: center;
-      color: var(--texto-suave);
-      padding: 40px 20px;
-      font-size: 0.95em;
-    }
-    .badge {
-      display: inline-block;
-      background: #edf2f7;
-      color: var(--azul);
-      padding: 2px 10px;
-      border-radius: 12px;
-      font-size: 0.75em;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .audio-player {
-      width: 100%;
-      margin-top: 10px;
-      border-radius: 8px;
-    }
-    @media (max-width: 600px) {
-      .header h1 { font-size: 1.3em; }
-      .nav button { font-size: 0.85em; padding: 14px 4px; }
-      .card { padding: 16px; }
-      .card-acciones { flex-direction: column; }
-      .btn { justify-content: center; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iglesia Bautista de Sola</title>
+<style>
+  :root {
+    --azul: #1e3a5f;
+    --azul-claro: #2c5282;
+    --dorado: #b8860b;
+    --gris-fondo: #f7f8fa;
+    --gris-borde: #e2e8f0;
+    --texto: #1a202c;
+    --texto-suave: #64748b;
+    --blanco: #ffffff;
+    --sombra: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    background: var(--gris-fondo);
+    color: var(--texto);
+    line-height: 1.6;
+    padding-bottom: 40px;
+  }
+  .header {
+    background: linear-gradient(135deg, var(--azul) 0%, var(--azul-claro) 100%);
+    color: white;
+    padding: 32px 16px 24px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  .header h1 { font-size: 1.6em; font-weight: 700; letter-spacing: 0.5px; }
+  .header p { font-size: 0.9em; opacity: 0.85; margin-top: 4px; }
+  .nav {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    background: var(--blanco);
+    border-bottom: 1px solid var(--gris-borde);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+  .nav button {
+    flex: 1;
+    max-width: 180px;
+    background: none;
+    border: none;
+    padding: 16px 8px;
+    font-size: 0.95em;
+    font-weight: 600;
+    color: var(--texto-suave);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav button.active { color: var(--azul); border-bottom-color: var(--dorado); }
+  .nav button:hover { color: var(--azul-claro); }
+  .container { max-width: 800px; margin: 0 auto; padding: 24px 16px; }
+  .seccion-titulo {
+    font-size: 1.3em;
+    font-weight: 700;
+    color: var(--azul);
+    margin: 28px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--dorado);
+    display: inline-block;
+  }
+  .grupo-mes { margin-bottom: 32px; }
+  .grupo-mes h3 {
+    font-size: 0.85em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--texto-suave);
+    margin-bottom: 12px;
+  }
+  .card {
+    background: var(--blanco);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 14px;
+    box-shadow: var(--sombra);
+    border: 1px solid var(--gris-borde);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+  .card-titulo { font-size: 1.15em; font-weight: 700; color: var(--azul); margin-bottom: 4px; }
+  .card-meta {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    font-size: 0.85em; color: var(--texto-suave); margin-bottom: 10px;
+  }
+  .card-desc { font-size: 0.95em; color: #475569; margin-bottom: 14px; }
+  .card-acciones { display: flex; gap: 10px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 10px 18px; border-radius: 8px;
+    font-size: 0.9em; font-weight: 600;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-primario { background: var(--azul); color: white; }
+  .btn-primario:hover { background: var(--azul-claro); }
+  .btn-secundario { background: #edf2f7; color: var(--azul); }
+  .btn-secundario:hover { background: #e2e8f0; }
+  .btn-dorado { background: var(--dorado); color: white; }
+  .btn-dorado:hover { background: #9a6f0a; }
+  .btn-peligro { background: #c53030; color: white; }
+  .btn-peligro:hover { background: #9b2c2c; }
+  input, select, textarea {
+    width: 100%; padding: 11px 14px; margin-bottom: 12px;
+    border: 1px solid var(--gris-borde); border-radius: 8px;
+    font-size: 0.95em; font-family: inherit;
+    background: var(--blanco); transition: border-color 0.15s;
+  }
+  input:focus, select:focus, textarea:focus {
+    outline: none; border-color: var(--azul-claro);
+    box-shadow: 0 0 0 3px rgba(44,82,130,0.1);
+  }
+  textarea { resize: vertical; min-height: 70px; }
+  label.campo {
+    display: block; font-size: 0.85em; font-weight: 600;
+    color: var(--texto-suave); margin-bottom: 4px;
+  }
+  .form-card {
+    background: var(--blanco); border-radius: 12px;
+    padding: 24px; box-shadow: var(--sombra);
+    border: 1px solid var(--gris-borde);
+  }
+  .hidden { display: none !important; }
+  .mensaje {
+    padding: 12px 16px; border-radius: 8px; margin-bottom: 16px;
+    display: none; font-size: 0.9em; font-weight: 500;
+  }
+  .mensaje.exito { background: #f0fff4; color: #22543d; border: 1px solid #9ae6b4; display: block; }
+  .mensaje.error { background: #fff5f5; color: #742a2a; border: 1px solid #feb2b2; display: block; }
+  .vacio { text-align: center; color: var(--texto-suave); padding: 40px 20px; font-size: 0.95em; }
+  .badge {
+    display: inline-block; background: #edf2f7; color: var(--azul);
+    padding: 2px 10px; border-radius: 12px;
+    font-size: 0.75em; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .badge-rol { background: var(--dorado); color: white; }
+  .badge-eco { background: #27ae60; color: white; }
+  /* LOGIN */
+  .login-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--azul) 0%, var(--azul-claro) 100%);
+    padding: 20px;
+  }
+  .login-box {
+    background: white;
+    border-radius: 16px;
+    padding: 36px 28px;
+    max-width: 420px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  .login-box h1 {
+    color: var(--azul);
+    font-size: 1.4em;
+    text-align: center;
+    margin-bottom: 4px;
+  }
+  .login-box .subtitulo {
+    text-align: center;
+    color: var(--texto-suave);
+    font-size: 0.9em;
+    margin-bottom: 24px;
+  }
+  .login-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    background: #edf2f7;
+    padding: 4px;
+    border-radius: 10px;
+  }
+  .login-tabs button {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9em;
+    color: var(--texto-suave);
+    cursor: pointer;
+  }
+  .login-tabs button.active {
+    background: white;
+    color: var(--azul);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  .usuario-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.15);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    margin-top: 10px;
+  }
+  .logout-btn {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    cursor: pointer;
+    margin-left: 8px;
+  }
+  .logout-btn:hover { background: rgba(255,255,255,0.3); }
+  @media (max-width: 600px) {
+    .header h1 { font-size: 1.3em; }
+    .nav button { font-size: 0.8em; padding: 12px 4px; }
+    .card { padding: 16px; }
+    .card-acciones { flex-direction: column; }
+    .btn { justify-content: center; }
+  }
+</style>
 </head>
 <body>
 
-<header class="header">
-  <h1>Iglesia Bautista de Sola</h1>
-  <p>Gestión y recursos</p>
-</header>
+<!-- ==================== LOGIN ==================== -->
+<div id="pantalla-login" class="login-wrapper">
+  <div class="login-box">
+    <h1>Iglesia Bautista de Sola</h1>
+    <p class="subtitulo">Sistema de gestión</p>
 
-<nav class="nav">
-  <button id="btn-sermones" class="active" onclick="mostrarSeccion('sermones')">Sermones</button>
-  <button id="btn-miembros" onclick="mostrarSeccion('miembros')">Miembros</button>
-  <button id="btn-economia" onclick="mostrarSeccion('economia')">Economía</button>
-</nav>
-
-<div class="container">
-
-  <!-- SECCIÓN SERMONES -->
-  <section id="seccion-sermones">
-    <h2 class="seccion-titulo">Sermones</h2>
-    <div id="lista-sermones"></div>
-
-    <h2 class="seccion-titulo" style="margin-top:40px;">Publicar un sermón</h2>
-    <div class="form-card">
-      <div id="mensaje-sermon" class="mensaje"></div>
-
-      <label class="campo">Título *</label>
-      <input type="text" id="sermon-titulo" placeholder="Ej: La fe que agrada a Dios" required>
-
-      <label class="campo">Predicador *</label>
-      <input type="text" id="sermon-predicador" placeholder="Ej: Pastor Juan Pérez" required>
-
-      <label class="campo">Tema</label>
-      <input type="text" id="sermon-tema" placeholder="Ej: Fe, Esperanza, Salvación">
-
-      <label class="campo">Descripción</label>
-      <textarea id="sermon-descripcion" placeholder="Breve resumen del sermón..."></textarea>
-
-      <label class="campo">Enlace externo (opcional)</label>
-      <input type="url" id="sermon-enlace" placeholder="https://youtube.com/... o https://drive.google.com/...">
-      <p style="font-size:0.8em; color:var(--texto-suave); margin-top:-6px; margin-bottom:14px;">
-        Pega aquí el enlace a YouTube, Facebook, Drive o cualquier página donde esté el sermón. Aparecerá un botón "Ver sermón".
-      </p>
-
-      <label class="campo">O sube un archivo de audio (opcional)</label>
-      <input type="file" id="sermon-archivo" accept="audio/*">
-
-      <button class="btn btn-primario" style="width:100%; justify-content:center;" onclick="publicarSermon()">
-        Publicar sermón
-      </button>
+    <div class="login-tabs">
+      <button id="tab-miembro" class="active" onclick="cambiarTabLogin('miembro')">Miembro</button>
+      <button id="tab-admin" onclick="cambiarTabLogin('admin')">Administrador</button>
     </div>
-  </section>
 
-  <!-- SECCIÓN MIEMBROS -->
-  <section id="seccion-miembros" class="hidden">
-    <h2 class="seccion-titulo">Miembros</h2>
-    <div id="lista-miembros"></div>
+    <div id="login-mensaje" class="mensaje"></div>
 
-    <h2 class="seccion-titulo" style="margin-top:40px;">Agregar miembro</h2>
-    <div class="form-card">
-      <label class="campo">Nombre completo *</label>
-      <input type="text" id="miembro-nombre" placeholder="Nombre y apellidos">
+    <!-- LOGIN MIEMBRO -->
+    <div id="form-login-miembro">
+      <label class="campo">Tu nombre completo</label>
+      <input type="text" id="login-miembro-nombre" placeholder="Nombre y apellidos">
 
-      <label class="campo">Categoría</label>
-      <select id="miembro-categoria">
-        <option value="Caballeros">Caballeros</option>
-        <option value="Damas">Damas</option>
-        <option value="Jóvenes">Jóvenes</option>
-        <option value="Juveniles">Juveniles</option>
-        <option value="Tercera Edad">Tercera Edad</option>
-        <option value="Líderes">Líderes</option>
+      <label class="campo">Contraseña</label>
+      <input type="password" id="login-miembro-password" placeholder="Elige una contraseña">
+
+      <button class="btn btn-primario" style="width:100%; justify-content:center; margin-top:8px;" onclick="loginMiembro()">
+        Entrar
+      </button>
+      <p style="font-size:0.8em; color:var(--texto-suave); text-align:center; margin-top:12px;">
+        Si es tu primera vez, se creará tu cuenta automáticamente.
+      </p>
+    </div>
+
+    <!-- LOGIN ADMIN -->
+    <div id="form-login-admin" class="hidden">
+      <label class="campo">Selecciona tu nombre</label>
+      <select id="login-admin-nombre">
+        <option value="">-- Selecciona --</option>
       </select>
 
-      <button class="btn btn-primario" style="width:100%; justify-content:center;" onclick="agregarMiembro()">
-        Agregar miembro
+      <label class="campo">Contraseña</label>
+      <input type="password" id="login-admin-password" placeholder="Tu contraseña">
+
+      <button class="btn btn-primario" style="width:100%; justify-content:center; margin-top:8px;" onclick="loginAdmin()">
+        Entrar como administrador
       </button>
     </div>
-  </section>
+  </div>
+</div>
 
-  <!-- SECCIÓN ECONOMÍA -->
-  <section id="seccion-economia" class="hidden">
-    <h2 class="seccion-titulo">Movimientos económicos</h2>
-    <div id="lista-economia"></div>
-
-    <h2 class="seccion-titulo" style="margin-top:40px;">Registrar movimiento</h2>
-    <div class="form-card">
-      <label class="campo">Fecha</label>
-      <input type="date" id="eco-fecha">
-
-      <label class="campo">Concepto *</label>
-      <input type="text" id="eco-concepto" placeholder="Ej: Diezmo, Ofrenda, Pago de luz...">
-
-      <label class="campo">Detalle</label>
-      <input type="text" id="eco-detalle" placeholder="Descripción adicional">
-
-      <label class="campo">Entrada (CUP)</label>
-      <input type="number" id="eco-entrada" placeholder="0.00" step="0.01" min="0">
-
-      <label class="campo">Salida (CUP)</label>
-      <input type="number" id="eco-salida" placeholder="0.00" step="0.01" min="0">
-
-      <button class="btn btn-primario" style="width:100%; justify-content:center;" onclick="registrarEconomia()">
-        Registrar movimiento
-      </button>
+<!-- ==================== APP ==================== -->
+<div id="pantalla-app" class="hidden">
+  <header class="header">
+    <h1>Iglesia Bautista de Sola</h1>
+    <p>Sistema de gestión</p>
+    <div class="usuario-badge">
+      <span id="info-usuario">—</span>
+      <button class="logout-btn" onclick="cerrarSesion()">Salir</button>
     </div>
-  </section>
+  </header>
 
+  <nav class="nav">
+    <button id="btn-sermones" class="active" onclick="mostrarSeccion('sermones')">Sermones</button>
+    <button id="btn-miembros" class="hidden" onclick="mostrarSeccion('miembros')">Miembros</button>
+    <button id="btn-economia" class="hidden" onclick="mostrarSeccion('economia')">Economía</button>
+  </nav>
+
+  <div class="container">
+
+    <section id="seccion-sermones">
+      <h2 class="seccion-titulo">Sermones</h2>
+      <div id="lista-sermones"></div>
+
+      <div id="form-sermon-admin" class="hidden">
+        <h2 class="seccion-titulo" style="margin-top:40px;">Publicar un sermón</h2>
+        <div class="form-card">
+          <div id="mensaje-sermon" class="mensaje"></div>
+          <label class="campo">Título *</label>
+          <input type="text" id="sermon-titulo" placeholder="Ej: La fe que agrada a Dios">
+          <label class="campo">Predicador *</label>
+          <input type="text" id="sermon-predicador" placeholder="Ej: Pastor Rolando">
+          <label class="campo">Tema</label>
+          <input type="text" id="sermon-tema" placeholder="Ej: Fe, Esperanza">
+          <label class="campo">Descripción</label>
+          <textarea id="sermon-descripcion"></textarea>
+          <label class="campo">Enlace externo (opcional)</label>
+          <input type="url" id="sermon-enlace" placeholder="https://...">
+          <label class="campo">O sube un audio (opcional)</label>
+          <input type="file" id="sermon-archivo" accept="audio/*">
+          <button class="btn btn-primario" style="width:100%; justify-content:center;" onclick="publicarSermon()">
+            Publicar sermón
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section id="seccion-miembros" class="hidden">
+      <h2 class="seccion-titulo">Miembros</h2>
+      <div id="lista-miembros"></div>
+
+      <h2 class="seccion-titulo" style="margin-top:40px;">Agregar miembro</h2>
+      <div class="form-card">
+        <label class="campo">Nombre completo *</label>
+        <input type="text" id="miembro-nombre" placeholder="Nombre y apellidos">
+        <label class="campo">Categoría</label>
+        <select id="miembro-categoria">
+          <option value="Caballeros">Caballeros</option>
+          <option value="Damas">Damas</option>
+          <option value="Jóvenes">Jóvenes</option>
+          <option value="Juveniles">Juveniles</option>
+          <option value="Tercera Edad">Tercera Edad</option>
+          <option value="Líderes">Líderes</option>
+        </select>
+        <button class="btn btn-primario" style="width:100%; justify-content:center;" onclick="agregarMiembro()">
+          Agregar miembro
+        </button>
+      </div>
+    </section>
+
+    <section id="seccion-economia" class="hidden">
+      <h2 class="seccion-titulo">Movimientos económicos</h2>
+      <div id="lista-economia"></div>
+
+      <div id="form-eco-admin" class="hidden">
+        <h2 class="seccion-titulo" style="margin-top:40px;">Registrar movimiento</h2>
+        <div class="form-card">
+          <div id="mensaje-eco" class="mensaje"></div>
+          <label class="campo">Fecha</label>
+          <input type="date" id="eco-fecha">
+          <label class="campo">Concepto *</label>
+          <input type="text" id="eco-concepto">
+          <label class="campo">Detalle</label>
+          <input type="text" id="eco-detalle">
+          <label class="campo">Entrada (CUP)</label>
+          <input type="number" id="eco-entrada" step="0.01" min="0" placeholder="0.00">
+          <label class="campo">Salida (CUP)</label>
+          <input type="number" id="eco-salida" step="0.01" min="0" placeholder="0.00">
+          <button class="btn btn-primario" style="width:100%; justify-content:center;" onclick="registrarEconomia()">
+            Registrar movimiento
+          </button>
+        </div>
+      </div>
+      <div id="aviso-sin-permiso-eco" class="hidden">
+        <div class="form-card" style="margin-top:24px; text-align:center; color:var(--texto-suave);">
+          🔒 Solo <strong>Yolexis Leandro</strong> y <strong>Yaquelin Cuadrado</strong> pueden registrar movimientos económicos.
+        </div>
+      </div>
+    </section>
+  </div>
 </div>
 
 <script>
-// ⚠️ CAMBIA ESTO por tu URL de Apps Script (termina en /exec)
-const API_URL = "https://script.google.com/macros/s/AKfycbyXUXBaNyvH0hXwfusKcJYy7cGACdVU_zREBRHBCOf_b3OnkfHlOd3F3nRkiXeWvPFVeg/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbzDDUHcgvr1bhOj2xSQobk4F-iJEFVtbtnQIg49jzWbunv8XOiks_479MSguoocshl4Hg/exec";
+
+let USUARIO_ACTUAL = null;
+
+// ==========================================
+// LOGIN
+// ==========================================
+function cambiarTabLogin(tipo) {
+  document.getElementById('tab-miembro').classList.toggle('active', tipo === 'miembro');
+  document.getElementById('tab-admin').classList.toggle('active', tipo === 'admin');
+  document.getElementById('form-login-miembro').classList.toggle('hidden', tipo !== 'miembro');
+  document.getElementById('form-login-admin').classList.toggle('hidden', tipo !== 'admin');
+  document.getElementById('login-mensaje').className = 'mensaje';
+}
+
+function cargarListaAdmins() {
+  fetch(API_URL + "?tipo=listaAdmins")
+    .then(r => r.json())
+    .then(admins => {
+      const select = document.getElementById('login-admin-nombre');
+      select.innerHTML = '<option value="">-- Selecciona --</option>';
+      admins.forEach(a => {
+        const opt = document.createElement('option');
+        opt.value = a;
+        opt.textContent = a;
+        select.appendChild(opt);
+      });
+    })
+    .catch(err => console.error("Error cargando admins:", err));
+}
+
+function loginMiembro() {
+  const nombre = document.getElementById('login-miembro-nombre').value.trim();
+  const password = document.getElementById('login-miembro-password').value;
+  const msg = document.getElementById('login-mensaje');
+
+  if (!nombre || !password) {
+    msg.className = 'mensaje error';
+    msg.textContent = 'Escribe tu nombre y una contraseña.';
+    return;
+  }
+
+  // Intentar login
+  const formData = new FormData();
+  formData.append('tipo', 'login');
+  formData.append('nombre', nombre);
+  formData.append('password', password);
+
+  fetch(API_URL, { method: 'POST', body: formData })
+    .then(r => r.json())
+    .then(res => {
+      if (res.resultado === 'éxito') {
+        iniciarSesion(res.usuario);
+      } else if (res.mensaje && res.mensaje.includes("no encontrado")) {
+        // Registro automático
+        const fd = new FormData();
+        fd.append('tipo', 'registro');
+        fd.append('nombre', nombre);
+        fd.append('password', password);
+        fetch(API_URL, { method: 'POST', body: fd })
+          .then(r => r.json())
+          .then(res2 => {
+            if (res2.resultado === 'éxito') {
+              iniciarSesion(res2.usuario);
+            } else {
+              msg.className = 'mensaje error';
+              msg.textContent = res2.mensaje || 'Error al registrar.';
+            }
+          });
+      } else {
+        msg.className = 'mensaje error';
+        msg.textContent = res.mensaje || 'Error al iniciar sesión.';
+      }
+    })
+    .catch(err => {
+      msg.className = 'mensaje error';
+      msg.textContent = 'Error de red: ' + err.message;
+    });
+}
+
+function loginAdmin() {
+  const nombre = document.getElementById('login-admin-nombre').value;
+  const password = document.getElementById('login-admin-password').value;
+  const msg = document.getElementById('login-mensaje');
+
+  if (!nombre || !password) {
+    msg.className = 'mensaje error';
+    msg.textContent = 'Selecciona tu nombre y escribe tu contraseña.';
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append('tipo', 'login');
+  formData.append('nombre', nombre);
+  formData.append('password', password);
+
+  fetch(API_URL, { method: 'POST', body: formData })
+    .then(r => r.json())
+    .then(res => {
+      if (res.resultado === 'éxito') {
+        iniciarSesion(res.usuario);
+      } else {
+        msg.className = 'mensaje error';
+        msg.textContent = res.mensaje || 'Credenciales incorrectas.';
+      }
+    })
+    .catch(err => {
+      msg.className = 'mensaje error';
+      msg.textContent = 'Error de red: ' + err.message;
+    });
+}
+
+function iniciarSesion(usuario) {
+  USUARIO_ACTUAL = usuario;
+  localStorage.setItem('usuario', JSON.stringify(usuario));
+
+  document.getElementById('pantalla-login').classList.add('hidden');
+  document.getElementById('pantalla-app').classList.remove('hidden');
+
+  const rolTexto = usuario.puedeEconomia ? 'Admin Economía' : (usuario.esAdmin ? 'Administrador' : 'Miembro');
+  document.getElementById('info-usuario').textContent = `${usuario.nombre} · ${rolTexto}`;
+
+  // Mostrar u ocultar botones según permisos
+  document.getElementById('btn-miembros').classList.toggle('hidden', !usuario.esAdmin && !usuario.puedeEconomia);
+  document.getElementById('btn-economia').classList.toggle('hidden', !usuario.esAdmin && !usuario.puedeEconomia);
+  document.getElementById('form-sermon-admin').classList.toggle('hidden', !usuario.esAdmin && !usuario.puedeEconomia);
+  document.getElementById('form-eco-admin').classList.toggle('hidden', !usuario.puedeEconomia);
+  document.getElementById('aviso-sin-permiso-eco').classList.toggle('hidden', usuario.puedeEconomia);
+
+  cargarSermones();
+}
+
+function cerrarSesion() {
+  USUARIO_ACTUAL = null;
+  localStorage.removeItem('usuario');
+  document.getElementById('pantalla-app').classList.add('hidden');
+  document.getElementById('pantalla-login').classList.remove('hidden');
+  document.getElementById('login-miembro-nombre').value = '';
+  document.getElementById('login-miembro-password').value = '';
+  document.getElementById('login-admin-password').value = '';
+}
 
 // ==========================================
 // NAVEGACIÓN
@@ -355,10 +527,12 @@ const API_URL = "https://script.google.com/macros/s/AKfycbyXUXBaNyvH0hXwfusKcJYy
 function mostrarSeccion(nombre) {
   ['sermones', 'miembros', 'economia'].forEach(s => {
     document.getElementById('seccion-' + s).classList.add('hidden');
-    document.getElementById('btn-' + s).classList.remove('active');
+    const btn = document.getElementById('btn-' + s);
+    if (btn) btn.classList.remove('active');
   });
   document.getElementById('seccion-' + nombre).classList.remove('hidden');
-  document.getElementById('btn-' + nombre).classList.add('active');
+  const btn = document.getElementById('btn-' + nombre);
+  if (btn) btn.classList.add('active');
 
   if (nombre === 'sermones') cargarSermones();
   if (nombre === 'miembros') cargarMiembros();
@@ -385,11 +559,8 @@ function claveMes(fecha) {
 function escaparHTML(texto) {
   if (texto === null || texto === undefined) return '';
   return String(texto)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
 // ==========================================
@@ -399,62 +570,52 @@ function cargarSermones() {
   const cont = document.getElementById("lista-sermones");
   cont.innerHTML = '<p class="vacio">Cargando sermones...</p>';
 
-  fetch(API_URL + "?tipo=sermones")
+  fetch(API_URL + "?tipo=sermones&usuario=" + encodeURIComponent(USUARIO_ACTUAL?.nombre || ""))
     .then(r => r.json())
     .then(sermones => {
       if (!Array.isArray(sermones) || sermones.length === 0) {
         cont.innerHTML = '<p class="vacio">Aún no hay sermones publicados.</p>';
         return;
       }
-
-      // Ordenar por fecha descendente
       sermones.sort((a, b) => new Date(b.Fecha) - new Date(a.Fecha));
-
-      // Agrupar por mes
       const grupos = {};
       sermones.forEach(s => {
         const clave = claveMes(s.Fecha);
         if (!grupos[clave]) grupos[clave] = [];
         grupos[clave].push(s);
       });
-
-      // Renderizar
       let html = '';
       Object.keys(grupos).forEach(mes => {
         html += `<div class="grupo-mes"><h3>${mes}</h3>`;
         grupos[mes].forEach(s => {
-          const enlace = s.EnlaceAudio || s.Enlace || '';
+          const enlace = s.Enlace || s.EnlaceAudio || '';
           const tieneEnlace = enlace && enlace.trim() !== '';
           html += `
             <div class="card">
               <div class="card-titulo">${escaparHTML(s.Titulo) || 'Sin título'}</div>
               <div class="card-meta">
-                <span>👤 ${escaparHTML(s.Predicador) || 'Predicador no indicado'}</span>
+                <span>👤 ${escaparHTML(s.Predicador) || 'No indicado'}</span>
                 <span>📅 ${formatearFecha(s.Fecha)}</span>
                 ${s.Tema ? `<span class="badge">${escaparHTML(s.Tema)}</span>` : ''}
               </div>
               ${s.Descripcion ? `<p class="card-desc">${escaparHTML(s.Descripcion)}</p>` : ''}
               <div class="card-acciones">
-                ${tieneEnlace ? `
-                  <a href="${escaparHTML(enlace)}" target="_blank" rel="noopener" class="btn btn-dorado">
-                    ▶ Ver sermón
-                  </a>
-                ` : ''}
+                ${tieneEnlace ? `<a href="${escaparHTML(enlace)}" target="_blank" rel="noopener" class="btn btn-dorado">▶ Ver sermón</a>` : ''}
               </div>
-            </div>
-          `;
+            </div>`;
         });
         html += `</div>`;
       });
       cont.innerHTML = html;
     })
     .catch(err => {
-      console.error("Error cargando sermones:", err);
-      cont.innerHTML = '<p class="vacio">Error al cargar los sermones. Revisa la conexión.</p>';
+      console.error(err);
+      cont.innerHTML = '<p class="vacio">Error al cargar los sermones.</p>';
     });
 }
 
 function publicarSermon() {
+  if (!USUARIO_ACTUAL) return;
   const titulo = document.getElementById('sermon-titulo').value.trim();
   const predicador = document.getElementById('sermon-predicador').value.trim();
   const tema = document.getElementById('sermon-tema').value.trim();
@@ -465,7 +626,7 @@ function publicarSermon() {
 
   if (!titulo || !predicador) {
     msg.className = 'mensaje error';
-    msg.textContent = 'El título y el predicador son obligatorios.';
+    msg.textContent = 'Título y predicador son obligatorios.';
     return;
   }
 
@@ -483,57 +644,45 @@ function publicarSermon() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          bytes: bytes,
-          filename: archivo.name,
-          mimeType: archivo.type,
-          titulo: titulo,
-          predicador: predicador,
-          tema: tema,
-          descripcion: descripcion
+          bytes, filename: archivo.name, mimeType: archivo.type,
+          titulo, predicador, tema, descripcion,
+          usuario: USUARIO_ACTUAL.nombre
         })
       })
       .then(r => r.json())
       .then(res => {
         if (res.resultado === 'éxito') {
           msg.className = 'mensaje exito';
-          msg.textContent = 'Sermón publicado correctamente con audio.';
+          msg.textContent = 'Sermón publicado con audio.';
           limpiarFormSermon();
           cargarSermones();
         } else {
           msg.className = 'mensaje error';
-          msg.textContent = 'Error: ' + (res.mensaje || 'desconocido');
+          msg.textContent = 'Error: ' + (res.mensaje || '');
         }
-      })
-      .catch(err => {
-        msg.className = 'mensaje error';
-        msg.textContent = 'Error de red: ' + err.message;
       });
     };
   } else {
-    const formData = new FormData();
-    formData.append('tipo', 'sermon');
-    formData.append('titulo', titulo);
-    formData.append('predicador', predicador);
-    formData.append('tema', tema);
-    formData.append('descripcion', descripcion);
-    formData.append('enlaceAudio', enlace);
-
-    fetch(API_URL, { method: 'POST', body: formData })
+    const fd = new FormData();
+    fd.append('tipo', 'sermon');
+    fd.append('usuario', USUARIO_ACTUAL.nombre);
+    fd.append('titulo', titulo);
+    fd.append('predicador', predicador);
+    fd.append('tema', tema);
+    fd.append('descripcion', descripcion);
+    fd.append('enlaceAudio', enlace);
+    fetch(API_URL, { method: 'POST', body: fd })
       .then(r => r.json())
       .then(res => {
         if (res.resultado === 'éxito') {
           msg.className = 'mensaje exito';
-          msg.textContent = 'Sermón publicado correctamente.';
+          msg.textContent = 'Sermón publicado.';
           limpiarFormSermon();
           cargarSermones();
         } else {
           msg.className = 'mensaje error';
-          msg.textContent = 'Error: ' + (res.mensaje || 'desconocido');
+          msg.textContent = 'Error: ' + (res.mensaje || '');
         }
-      })
-      .catch(err => {
-        msg.className = 'mensaje error';
-        msg.textContent = 'Error de red: ' + err.message;
       });
   }
 }
@@ -549,25 +698,27 @@ function limpiarFormSermon() {
 // MIEMBROS
 // ==========================================
 function cargarMiembros() {
+  if (!USUARIO_ACTUAL) return;
   const cont = document.getElementById("lista-miembros");
   cont.innerHTML = '<p class="vacio">Cargando miembros...</p>';
 
-  fetch(API_URL + "?tipo=miembros")
+  fetch(API_URL + "?tipo=miembros&usuario=" + encodeURIComponent(USUARIO_ACTUAL.nombre))
     .then(r => r.json())
     .then(miembros => {
+      if (miembros.error) {
+        cont.innerHTML = '<p class="vacio">' + escaparHTML(miembros.error) + '</p>';
+        return;
+      }
       if (!Array.isArray(miembros) || miembros.length === 0) {
         cont.innerHTML = '<p class="vacio">No hay miembros registrados.</p>';
         return;
       }
-
-      // Agrupar por categoría
       const grupos = {};
       miembros.forEach(m => {
         const cat = m.Categoria || 'Sin categoría';
         if (!grupos[cat]) grupos[cat] = [];
         grupos[cat].push(m);
       });
-
       let html = '';
       Object.keys(grupos).sort().forEach(cat => {
         html += `<div class="grupo-mes"><h3>${escaparHTML(cat)} (${grupos[cat].length})</h3>`;
@@ -582,30 +733,31 @@ function cargarMiembros() {
                 ${m.Compromiso ? '<span>✓ Compromiso</span>' : ''}
                 ${m.Comision ? '<span>✓ Comisión</span>' : ''}
               </div>
-            </div>
-          `;
+            </div>`;
         });
         html += `</div>`;
       });
       cont.innerHTML = html;
     })
     .catch(err => {
-      console.error("Error cargando miembros:", err);
-      cont.innerHTML = '<p class="vacio">Error al cargar los miembros.</p>';
+      console.error(err);
+      cont.innerHTML = '<p class="vacio">Error al cargar miembros.</p>';
     });
 }
 
 function agregarMiembro() {
+  if (!USUARIO_ACTUAL) return;
   const nombre = document.getElementById('miembro-nombre').value.trim();
   const categoria = document.getElementById('miembro-categoria').value;
-  if (!nombre) return alert('Escribe el nombre del miembro.');
+  if (!nombre) return alert('Escribe el nombre.');
 
-  const formData = new FormData();
-  formData.append('tipo', 'miembro');
-  formData.append('nombre', nombre);
-  formData.append('categoria', categoria);
+  const fd = new FormData();
+  fd.append('tipo', 'miembro');
+  fd.append('usuario', USUARIO_ACTUAL.nombre);
+  fd.append('nombre', nombre);
+  fd.append('categoria', categoria);
 
-  fetch(API_URL, { method: 'POST', body: formData })
+  fetch(API_URL, { method: 'POST', body: fd })
     .then(r => r.json())
     .then(res => {
       if (res.resultado === 'éxito') {
@@ -614,55 +766,51 @@ function agregarMiembro() {
       } else {
         alert('Error: ' + res.mensaje);
       }
-    })
-    .catch(err => alert('Error de red: ' + err.message));
+    });
 }
 
 // ==========================================
 // ECONOMÍA
 // ==========================================
 function cargarEconomia() {
+  if (!USUARIO_ACTUAL) return;
   const cont = document.getElementById("lista-economia");
   cont.innerHTML = '<p class="vacio">Cargando movimientos...</p>';
 
-  fetch(API_URL + "?tipo=economia")
+  fetch(API_URL + "?tipo=economia&usuario=" + encodeURIComponent(USUARIO_ACTUAL.nombre))
     .then(r => r.json())
     .then(movs => {
+      if (movs.error) {
+        cont.innerHTML = '<p class="vacio">' + escaparHTML(movs.error) + '</p>';
+        return;
+      }
       if (!Array.isArray(movs) || movs.length === 0) {
         cont.innerHTML = '<p class="vacio">No hay movimientos registrados.</p>';
         return;
       }
-
-      // Ordenar por fecha descendente
       movs.sort((a, b) => new Date(b.Fecha) - new Date(a.Fecha));
-
-      // Agrupar por mes
       const grupos = {};
       movs.forEach(m => {
         const clave = claveMes(m.Fecha);
         if (!grupos[clave]) grupos[clave] = [];
         grupos[clave].push(m);
       });
-
       let html = '';
       Object.keys(grupos).forEach(mes => {
-        let totalEntradas = 0;
-        let totalSalidas = 0;
+        let te = 0, ts = 0;
         grupos[mes].forEach(m => {
-          totalEntradas += Number(m.Entrada) || 0;
-          totalSalidas += Number(m.Salida) || 0;
+          te += Number(m.Entrada) || 0;
+          ts += Number(m.Salida) || 0;
         });
-
         html += `<div class="grupo-mes">
           <h3>${mes}</h3>
           <div class="card" style="background:#f0f7ff; border-color:#bcd4f0;">
             <div class="card-meta" style="justify-content:space-between; margin:0;">
-              <span style="color:#27ae60; font-weight:700;">+ ${totalEntradas.toLocaleString('es-ES')} CUP</span>
-              <span style="color:#c0392b; font-weight:700;">− ${totalSalidas.toLocaleString('es-ES')} CUP</span>
-              <span style="color:var(--azul); font-weight:700;">= ${(totalEntradas - totalSalidas).toLocaleString('es-ES')} CUP</span>
+              <span style="color:#27ae60; font-weight:700;">+ ${te.toLocaleString('es-ES')} CUP</span>
+              <span style="color:#c0392b; font-weight:700;">− ${ts.toLocaleString('es-ES')} CUP</span>
+              <span style="color:var(--azul); font-weight:700;">= ${(te - ts).toLocaleString('es-ES')} CUP</span>
             </div>
           </div>`;
-
         grupos[mes].forEach(m => {
           html += `
             <div class="card">
@@ -675,32 +823,33 @@ function cargarEconomia() {
                 ${m.Entrada ? `<span style="color:#27ae60;">Entrada: ${Number(m.Entrada).toLocaleString('es-ES')} CUP</span>` : ''}
                 ${m.Salida ? `<span style="color:#c0392b;">Salida: ${Number(m.Salida).toLocaleString('es-ES')} CUP</span>` : ''}
               </div>
-            </div>
-          `;
+            </div>`;
         });
         html += `</div>`;
       });
       cont.innerHTML = html;
     })
     .catch(err => {
-      console.error("Error cargando economía:", err);
-      cont.innerHTML = '<p class="vacio">Error al cargar los movimientos.</p>';
+      console.error(err);
+      cont.innerHTML = '<p class="vacio">Error al cargar economía.</p>';
     });
 }
 
 function registrarEconomia() {
+  if (!USUARIO_ACTUAL || !USUARIO_ACTUAL.puedeEconomia) return;
   const concepto = document.getElementById('eco-concepto').value.trim();
   if (!concepto) return alert('Escribe un concepto.');
 
-  const formData = new FormData();
-  formData.append('tipo', 'economia');
-  formData.append('fecha', document.getElementById('eco-fecha').value || new Date().toISOString().split('T')[0]);
-  formData.append('concepto', concepto);
-  formData.append('detalle', document.getElementById('eco-detalle').value.trim());
-  formData.append('entrada', document.getElementById('eco-entrada').value || 0);
-  formData.append('salida', document.getElementById('eco-salida').value || 0);
+  const fd = new FormData();
+  fd.append('tipo', 'economia');
+  fd.append('usuario', USUARIO_ACTUAL.nombre);
+  fd.append('fecha', document.getElementById('eco-fecha').value || new Date().toISOString().split('T')[0]);
+  fd.append('concepto', concepto);
+  fd.append('detalle', document.getElementById('eco-detalle').value.trim());
+  fd.append('entrada', document.getElementById('eco-entrada').value || 0);
+  fd.append('salida', document.getElementById('eco-salida').value || 0);
 
-  fetch(API_URL, { method: 'POST', body: formData })
+  fetch(API_URL, { method: 'POST', body: fd })
     .then(r => r.json())
     .then(res => {
       if (res.resultado === 'éxito') {
@@ -711,14 +860,23 @@ function registrarEconomia() {
       } else {
         alert('Error: ' + res.mensaje);
       }
-    })
-    .catch(err => alert('Error de red: ' + err.message));
+    });
 }
 
 // ==========================================
 // INICIO
 // ==========================================
-cargarSermones();
+document.addEventListener('DOMContentLoaded', () => {
+  cargarListaAdmins();
+  const guardado = localStorage.getItem('usuario');
+  if (guardado) {
+    try {
+      iniciarSesion(JSON.parse(guardado));
+    } catch(e) {
+      localStorage.removeItem('usuario');
+    }
+  }
+});
 </script>
 </body>
 </html>
