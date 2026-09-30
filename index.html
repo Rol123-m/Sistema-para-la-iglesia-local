@@ -5,60 +5,301 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Iglesia Bautista de Sola</title>
   <style>
+    :root {
+      --azul: #1e3a5f;
+      --azul-claro: #2c5282;
+      --dorado: #b8860b;
+      --gris-fondo: #f7f8fa;
+      --gris-borde: #e2e8f0;
+      --texto: #1a202c;
+      --texto-suave: #64748b;
+      --blanco: #ffffff;
+      --sombra: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05);
+    }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f4f6f8; color: #333; padding: 16px; }
-    .container { max-width: 700px; margin: 0 auto; }
-    h1 { font-size: 1.5em; margin-bottom: 16px; color: #2c3e50; }
-    h2 { font-size: 1.2em; margin: 24px 0 12px; color: #34495e; border-bottom: 2px solid #3498db; padding-bottom: 4px; }
-    .card { background: white; border-radius: 10px; padding: 16px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
-    .card .titulo { font-weight: 700; font-size: 1.05em; color: #2c3e50; }
-    .card .meta { color: #7f8c8d; font-size: 0.85em; margin: 4px 0; }
-    .card audio { width: 100%; margin-top: 8px; }
-    input, select, textarea, button { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 1em; }
-    button { background: #3498db; color: white; border: none; font-weight: 600; cursor: pointer; }
-    button:active { background: #2980b9; }
-    button.secondary { background: #95a5a6; }
-    .hidden { display: none; }
-    .tabs { display: flex; gap: 8px; margin-bottom: 16px; }
-    .tabs button { flex: 1; background: #ecf0f1; color: #2c3e50; }
-    .tabs button.active { background: #3498db; color: white; }
-    .mensaje { padding: 10px; border-radius: 8px; margin-bottom: 10px; display: none; }
-    .mensaje.exito { background: #d4edda; color: #155724; display: block; }
-    .mensaje.error { background: #f8d7da; color: #721c24; display: block; }
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+      background: var(--gris-fondo);
+      color: var(--texto);
+      line-height: 1.6;
+      padding-bottom: 40px;
+    }
+    .header {
+      background: linear-gradient(135deg, var(--azul) 0%, var(--azul-claro) 100%);
+      color: white;
+      padding: 32px 16px 24px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .header h1 {
+      font-size: 1.6em;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .header p {
+      font-size: 0.9em;
+      opacity: 0.85;
+      margin-top: 4px;
+    }
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+      background: var(--blanco);
+      border-bottom: 1px solid var(--gris-borde);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    .nav button {
+      flex: 1;
+      max-width: 180px;
+      background: none;
+      border: none;
+      padding: 16px 8px;
+      font-size: 0.95em;
+      font-weight: 600;
+      color: var(--texto-suave);
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s;
+    }
+    .nav button.active {
+      color: var(--azul);
+      border-bottom-color: var(--dorado);
+    }
+    .nav button:hover { color: var(--azul-claro); }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 24px 16px;
+    }
+    .seccion-titulo {
+      font-size: 1.3em;
+      font-weight: 700;
+      color: var(--azul);
+      margin: 28px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--dorado);
+      display: inline-block;
+    }
+    .grupo-mes {
+      margin-bottom: 32px;
+    }
+    .grupo-mes h3 {
+      font-size: 0.85em;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--texto-suave);
+      margin-bottom: 12px;
+    }
+    .card {
+      background: var(--blanco);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 14px;
+      box-shadow: var(--sombra);
+      border: 1px solid var(--gris-borde);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+    .card-titulo {
+      font-size: 1.15em;
+      font-weight: 700;
+      color: var(--azul);
+      margin-bottom: 4px;
+    }
+    .card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.85em;
+      color: var(--texto-suave);
+      margin-bottom: 10px;
+    }
+    .card-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .card-desc {
+      font-size: 0.95em;
+      color: #475569;
+      margin-bottom: 14px;
+    }
+    .card-acciones {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 0.9em;
+      font-weight: 600;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-primario {
+      background: var(--azul);
+      color: white;
+    }
+    .btn-primario:hover { background: var(--azul-claro); }
+    .btn-secundario {
+      background: #edf2f7;
+      color: var(--azul);
+    }
+    .btn-secundario:hover { background: #e2e8f0; }
+    .btn-dorado {
+      background: var(--dorado);
+      color: white;
+    }
+    .btn-dorado:hover { background: #9a6f0a; }
+    input, select, textarea {
+      width: 100%;
+      padding: 11px 14px;
+      margin-bottom: 12px;
+      border: 1px solid var(--gris-borde);
+      border-radius: 8px;
+      font-size: 0.95em;
+      font-family: inherit;
+      background: var(--blanco);
+      transition: border-color 0.15s;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--azul-claro);
+      box-shadow: 0 0 0 3px rgba(44,82,130,0.1);
+    }
+    textarea { resize: vertical; min-height: 70px; }
+    label.campo {
+      display: block;
+      font-size: 0.85em;
+      font-weight: 600;
+      color: var(--texto-suave);
+      margin-bottom: 4px;
+    }
+    .form-card {
+      background: var(--blanco);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: var(--sombra);
+      border: 1px solid var(--gris-borde);
+    }
+    .hidden { display: none !important; }
+    .mensaje {
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      display: none;
+      font-size: 0.9em;
+      font-weight: 500;
+    }
+    .mensaje.exito { background: #f0fff4; color: #22543d; border: 1px solid #9ae6b4; display: block; }
+    .mensaje.error { background: #fff5f5; color: #742a2a; border: 1px solid #feb2b2; display: block; }
+    .vacio {
+      text-align: center;
+      color: var(--texto-suave);
+      padding: 40px 20px;
+      font-size: 0.95em;
+    }
+    .badge {
+      display: inline-block;
+      background: #edf2f7;
+      color: var(--azul);
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 0.75em;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .audio-player {
+      width: 100%;
+      margin-top: 10px;
+      border-radius: 8px;
+    }
+    @media (max-width: 600px) {
+      .header h1 { font-size: 1.3em; }
+      .nav button { font-size: 0.85em; padding: 14px 4px; }
+      .card { padding: 16px; }
+      .card-acciones { flex-direction: column; }
+      .btn { justify-content: center; }
+    }
   </style>
 </head>
 <body>
-<div class="container">
+
+<header class="header">
   <h1>Iglesia Bautista de Sola</h1>
+  <p>Gestión y recursos</p>
+</header>
 
-  <div class="tabs">
-    <button id="btn-sermones" class="active" onclick="mostrarSeccion('sermones')">Sermones</button>
-    <button id="btn-miembros" onclick="mostrarSeccion('miembros')">Miembros</button>
-    <button id="btn-economia" onclick="mostrarSeccion('economia')">Economía</button>
-  </div>
+<nav class="nav">
+  <button id="btn-sermones" class="active" onclick="mostrarSeccion('sermones')">Sermones</button>
+  <button id="btn-miembros" onclick="mostrarSeccion('miembros')">Miembros</button>
+  <button id="btn-economia" onclick="mostrarSeccion('economia')">Economía</button>
+</nav>
 
-  <!-- SERMONES -->
-  <div id="seccion-sermones">
+<div class="container">
+
+  <!-- SECCIÓN SERMONES -->
+  <section id="seccion-sermones">
+    <h2 class="seccion-titulo">Sermones</h2>
     <div id="lista-sermones"></div>
-    <h2>Publicar un Sermón</h2>
-    <div class="card">
-      <div id="mensaje-sermon" class="mensaje"></div>
-      <input type="text" id="sermon-titulo" placeholder="Título del sermón" required>
-      <input type="text" id="sermon-predicador" placeholder="Predicador" required>
-      <input type="text" id="sermon-tema" placeholder="Tema (opcional)">
-      <textarea id="sermon-descripcion" placeholder="Descripción breve (opcional)"></textarea>
-      <label style="font-size:0.9em; color:#555;">Subir audio (opcional):</label>
-      <input type="file" id="sermon-archivo" accept="audio/*">
-      <button onclick="publicarSermon()">Publicar Sermón</button>
-    </div>
-  </div>
 
-  <!-- MIEMBROS -->
-  <div id="seccion-miembros" class="hidden">
+    <h2 class="seccion-titulo" style="margin-top:40px;">Publicar un sermón</h2>
+    <div class="form-card">
+      <div id="mensaje-sermon" class="mensaje"></div>
+
+      <label class="campo">Título *</label>
+      <input type="text" id="sermon-titulo" placeholder="Ej: La fe que agrada a Dios" required>
+
+      <label class="campo">Predicador *</label>
+      <input type="text" id="sermon-predicador" placeholder="Ej: Pastor Juan Pérez" required>
+
+      <label class="campo">Tema</label>
+      <input type="text" id="sermon-tema" placeholder="Ej: Fe, Esperanza, Salvación">
+
+      <label class="campo">Descripción</label>
+      <textarea id="sermon-descripcion" placeholder="Breve resumen del sermón..."></textarea>
+
+      <label class="campo">Enlace externo (opcional)</label>
+      <input type="url" id="sermon-enlace" placeholder="https://youtube.com/... o https://drive.google.com/...">
+      <p style="font-size:0.8em; color:var(--texto-suave); margin-top:-6px; margin-bottom:14px;">
+        Pega aquí el enlace a YouTube, Facebook, Drive o cualquier página donde esté el sermón. Aparecerá un botón "Ver sermón".
+      </p>
+
+      <label class="campo">O sube un archivo de audio (opcional)</label>
+      <input type="file" id="sermon-archivo" accept="audio/*">
+
+      <button class="btn btn-primario" style="width:100%; justify-content:center;" onclick="publicarSermon()">
+        Publicar sermón
+      </button>
+    </div>
+  </section>
+
+  <!-- SECCIÓN MIEMBROS -->
+  <section id="seccion-miembros" class="hidden">
+    <h2 class="seccion-titulo">Miembros</h2>
     <div id="lista-miembros"></div>
-    <h2>Agregar Miembro</h2>
-    <div class="card">
-      <input type="text" id="miembro-nombre" placeholder="Nombre completo">
+
+    <h2 class="seccion-titulo" style="margin-top:40px;">Agregar miembro</h2>
+    <div class="form-card">
+      <label class="campo">Nombre completo *</label>
+      <input type="text" id="miembro-nombre" placeholder="Nombre y apellidos">
+
+      <label class="campo">Categoría</label>
       <select id="miembro-categoria">
         <option value="Caballeros">Caballeros</option>
         <option value="Damas">Damas</option>
@@ -67,28 +308,50 @@
         <option value="Tercera Edad">Tercera Edad</option>
         <option value="Líderes">Líderes</option>
       </select>
-      <button onclick="agregarMiembro()">Agregar Miembro</button>
-    </div>
-  </div>
 
-  <!-- ECONOMIA -->
-  <div id="seccion-economia" class="hidden">
-    <div id="lista-economia"></div>
-    <h2>Registrar Movimiento</h2>
-    <div class="card">
-      <input type="date" id="eco-fecha">
-      <input type="text" id="eco-concepto" placeholder="Concepto">
-      <input type="text" id="eco-detalle" placeholder="Detalle">
-      <input type="number" id="eco-entrada" placeholder="Entrada (CUP)" step="0.01">
-      <input type="number" id="eco-salida" placeholder="Salida (CUP)" step="0.01">
-      <button onclick="registrarEconomia()">Registrar</button>
+      <button class="btn btn-primario" style="width:100%; justify-content:center;" onclick="agregarMiembro()">
+        Agregar miembro
+      </button>
     </div>
-  </div>
+  </section>
+
+  <!-- SECCIÓN ECONOMÍA -->
+  <section id="seccion-economia" class="hidden">
+    <h2 class="seccion-titulo">Movimientos económicos</h2>
+    <div id="lista-economia"></div>
+
+    <h2 class="seccion-titulo" style="margin-top:40px;">Registrar movimiento</h2>
+    <div class="form-card">
+      <label class="campo">Fecha</label>
+      <input type="date" id="eco-fecha">
+
+      <label class="campo">Concepto *</label>
+      <input type="text" id="eco-concepto" placeholder="Ej: Diezmo, Ofrenda, Pago de luz...">
+
+      <label class="campo">Detalle</label>
+      <input type="text" id="eco-detalle" placeholder="Descripción adicional">
+
+      <label class="campo">Entrada (CUP)</label>
+      <input type="number" id="eco-entrada" placeholder="0.00" step="0.01" min="0">
+
+      <label class="campo">Salida (CUP)</label>
+      <input type="number" id="eco-salida" placeholder="0.00" step="0.01" min="0">
+
+      <button class="btn btn-primario" style="width:100%; justify-content:center;" onclick="registrarEconomia()">
+        Registrar movimiento
+      </button>
+    </div>
+  </section>
+
 </div>
 
 <script>
+// ⚠️ CAMBIA ESTO por tu URL de Apps Script (termina en /exec)
 const API_URL = "https://script.google.com/macros/s/AKfycbyXUXBaNyvH0hXwfusKcJYy7cGACdVU_zREBRHBCOf_b3OnkfHlOd3F3nRkiXeWvPFVeg/exec";
 
+// ==========================================
+// NAVEGACIÓN
+// ==========================================
 function mostrarSeccion(nombre) {
   ['sermones', 'miembros', 'economia'].forEach(s => {
     document.getElementById('seccion-' + s).classList.add('hidden');
@@ -102,46 +365,115 @@ function mostrarSeccion(nombre) {
   if (nombre === 'economia') cargarEconomia();
 }
 
+// ==========================================
+// UTILIDADES
+// ==========================================
+function formatearFecha(fecha) {
+  if (!fecha) return '';
+  const d = new Date(fecha);
+  if (isNaN(d.getTime())) return String(fecha);
+  return d.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+function claveMes(fecha) {
+  const d = new Date(fecha);
+  if (isNaN(d.getTime())) return 'Sin fecha';
+  const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  return meses[d.getMonth()] + ' ' + d.getFullYear();
+}
+
+function escaparHTML(texto) {
+  if (texto === null || texto === undefined) return '';
+  return String(texto)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+// ==========================================
+// SERMONES
+// ==========================================
 function cargarSermones() {
+  const cont = document.getElementById("lista-sermones");
+  cont.innerHTML = '<p class="vacio">Cargando sermones...</p>';
+
   fetch(API_URL + "?tipo=sermones")
     .then(r => r.json())
     .then(sermones => {
-      const cont = document.getElementById("lista-sermones");
-      if (!sermones.length) {
-        cont.innerHTML = '<p style="color:#888;">No hay sermones publicados aún.</p>';
+      if (!Array.isArray(sermones) || sermones.length === 0) {
+        cont.innerHTML = '<p class="vacio">Aún no hay sermones publicados.</p>';
         return;
       }
-      cont.innerHTML = sermones.map(s => `
-        <div class="card">
-          <div class="titulo">${s.Titulo || 'Sin título'}</div>
-          <div class="meta">${s.Predicador || ''} — ${s.Fecha || ''}</div>
-          <p style="margin:6px 0;">${s.Descripcion || ''}</p>
-          ${s.EnlaceAudio ? `<audio controls src="${s.EnlaceAudio}"></audio>` : ''}
-        </div>
-      `).join('');
+
+      // Ordenar por fecha descendente
+      sermones.sort((a, b) => new Date(b.Fecha) - new Date(a.Fecha));
+
+      // Agrupar por mes
+      const grupos = {};
+      sermones.forEach(s => {
+        const clave = claveMes(s.Fecha);
+        if (!grupos[clave]) grupos[clave] = [];
+        grupos[clave].push(s);
+      });
+
+      // Renderizar
+      let html = '';
+      Object.keys(grupos).forEach(mes => {
+        html += `<div class="grupo-mes"><h3>${mes}</h3>`;
+        grupos[mes].forEach(s => {
+          const enlace = s.EnlaceAudio || s.Enlace || '';
+          const tieneEnlace = enlace && enlace.trim() !== '';
+          html += `
+            <div class="card">
+              <div class="card-titulo">${escaparHTML(s.Titulo) || 'Sin título'}</div>
+              <div class="card-meta">
+                <span>👤 ${escaparHTML(s.Predicador) || 'Predicador no indicado'}</span>
+                <span>📅 ${formatearFecha(s.Fecha)}</span>
+                ${s.Tema ? `<span class="badge">${escaparHTML(s.Tema)}</span>` : ''}
+              </div>
+              ${s.Descripcion ? `<p class="card-desc">${escaparHTML(s.Descripcion)}</p>` : ''}
+              <div class="card-acciones">
+                ${tieneEnlace ? `
+                  <a href="${escaparHTML(enlace)}" target="_blank" rel="noopener" class="btn btn-dorado">
+                    ▶ Ver sermón
+                  </a>
+                ` : ''}
+              </div>
+            </div>
+          `;
+        });
+        html += `</div>`;
+      });
+      cont.innerHTML = html;
     })
-    .catch(err => console.error("Error cargando sermones:", err));
+    .catch(err => {
+      console.error("Error cargando sermones:", err);
+      cont.innerHTML = '<p class="vacio">Error al cargar los sermones. Revisa la conexión.</p>';
+    });
 }
 
 function publicarSermon() {
-  const titulo = document.getElementById('sermon-titulo').value;
-  const predicador = document.getElementById('sermon-predicador').value;
-  const tema = document.getElementById('sermon-tema').value;
-  const descripcion = document.getElementById('sermon-descripcion').value;
+  const titulo = document.getElementById('sermon-titulo').value.trim();
+  const predicador = document.getElementById('sermon-predicador').value.trim();
+  const tema = document.getElementById('sermon-tema').value.trim();
+  const descripcion = document.getElementById('sermon-descripcion').value.trim();
+  const enlace = document.getElementById('sermon-enlace').value.trim();
   const archivo = document.getElementById('sermon-archivo').files[0];
   const msg = document.getElementById('mensaje-sermon');
 
   if (!titulo || !predicador) {
     msg.className = 'mensaje error';
-    msg.textContent = 'Título y predicador son obligatorios.';
+    msg.textContent = 'El título y el predicador son obligatorios.';
     return;
   }
 
   if (archivo) {
     const reader = new FileReader();
     reader.readAsArrayBuffer(archivo);
-    reader.onload = function(e) {
-      const bytes = Array.from(new Uint8Array(e.target.result));
+    reader.onload = function(ev) {
+      const bytes = Array.from(new Uint8Array(ev.target.result));
       const qs = new URLSearchParams({
         accion: 'subirAudio',
         filename: archivo.name,
@@ -164,7 +496,7 @@ function publicarSermon() {
       .then(res => {
         if (res.resultado === 'éxito') {
           msg.className = 'mensaje exito';
-          msg.textContent = 'Sermón publicado con audio.';
+          msg.textContent = 'Sermón publicado correctamente con audio.';
           limpiarFormSermon();
           cargarSermones();
         } else {
@@ -184,14 +516,14 @@ function publicarSermon() {
     formData.append('predicador', predicador);
     formData.append('tema', tema);
     formData.append('descripcion', descripcion);
-    formData.append('enlaceAudio', '');
+    formData.append('enlaceAudio', enlace);
 
     fetch(API_URL, { method: 'POST', body: formData })
       .then(r => r.json())
       .then(res => {
         if (res.resultado === 'éxito') {
           msg.className = 'mensaje exito';
-          msg.textContent = 'Sermón publicado (sin audio).';
+          msg.textContent = 'Sermón publicado correctamente.';
           limpiarFormSermon();
           cargarSermones();
         } else {
@@ -207,32 +539,66 @@ function publicarSermon() {
 }
 
 function limpiarFormSermon() {
-  document.getElementById('sermon-titulo').value = '';
-  document.getElementById('sermon-predicador').value = '';
-  document.getElementById('sermon-tema').value = '';
-  document.getElementById('sermon-descripcion').value = '';
+  ['sermon-titulo','sermon-predicador','sermon-tema','sermon-descripcion','sermon-enlace'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
   document.getElementById('sermon-archivo').value = '';
 }
 
+// ==========================================
+// MIEMBROS
+// ==========================================
 function cargarMiembros() {
+  const cont = document.getElementById("lista-miembros");
+  cont.innerHTML = '<p class="vacio">Cargando miembros...</p>';
+
   fetch(API_URL + "?tipo=miembros")
     .then(r => r.json())
     .then(miembros => {
-      const cont = document.getElementById("lista-miembros");
-      cont.innerHTML = miembros.map(m => `
-        <div class="card">
-          <div class="titulo">${m.Nombre}</div>
-          <div class="meta">${m.Categoria || ''}</div>
-        </div>
-      `).join('');
+      if (!Array.isArray(miembros) || miembros.length === 0) {
+        cont.innerHTML = '<p class="vacio">No hay miembros registrados.</p>';
+        return;
+      }
+
+      // Agrupar por categoría
+      const grupos = {};
+      miembros.forEach(m => {
+        const cat = m.Categoria || 'Sin categoría';
+        if (!grupos[cat]) grupos[cat] = [];
+        grupos[cat].push(m);
+      });
+
+      let html = '';
+      Object.keys(grupos).sort().forEach(cat => {
+        html += `<div class="grupo-mes"><h3>${escaparHTML(cat)} (${grupos[cat].length})</h3>`;
+        grupos[cat].forEach(m => {
+          html += `
+            <div class="card">
+              <div class="card-titulo">${escaparHTML(m.Nombre)}</div>
+              <div class="card-meta">
+                ${m.Conversion ? '<span>✓ Conversión</span>' : ''}
+                ${m.Comunion ? '<span>✓ Comunión</span>' : ''}
+                ${m.Crecimiento ? '<span>✓ Crecimiento</span>' : ''}
+                ${m.Compromiso ? '<span>✓ Compromiso</span>' : ''}
+                ${m.Comision ? '<span>✓ Comisión</span>' : ''}
+              </div>
+            </div>
+          `;
+        });
+        html += `</div>`;
+      });
+      cont.innerHTML = html;
     })
-    .catch(err => console.error("Error cargando miembros:", err));
+    .catch(err => {
+      console.error("Error cargando miembros:", err);
+      cont.innerHTML = '<p class="vacio">Error al cargar los miembros.</p>';
+    });
 }
 
 function agregarMiembro() {
-  const nombre = document.getElementById('miembro-nombre').value;
+  const nombre = document.getElementById('miembro-nombre').value.trim();
   const categoria = document.getElementById('miembro-categoria').value;
-  if (!nombre) return alert('Escribe el nombre');
+  if (!nombre) return alert('Escribe el nombre del miembro.');
 
   const formData = new FormData();
   formData.append('tipo', 'miembro');
@@ -248,34 +614,89 @@ function agregarMiembro() {
       } else {
         alert('Error: ' + res.mensaje);
       }
-    });
+    })
+    .catch(err => alert('Error de red: ' + err.message));
 }
 
+// ==========================================
+// ECONOMÍA
+// ==========================================
 function cargarEconomia() {
+  const cont = document.getElementById("lista-economia");
+  cont.innerHTML = '<p class="vacio">Cargando movimientos...</p>';
+
   fetch(API_URL + "?tipo=economia")
     .then(r => r.json())
     .then(movs => {
-      const cont = document.getElementById("lista-economia");
-      cont.innerHTML = movs.map(m => `
-        <div class="card">
-          <div class="titulo">${m.Concepto || ''}</div>
-          <div class="meta">${m.Fecha || ''} — ${m.Detalle || ''}</div>
-          <div style="display:flex; gap:16px; margin-top:6px;">
-            ${m.Entrada ? `<span style="color:#27ae60;">Entrada: ${m.Entrada}</span>` : ''}
-            ${m.Salida ? `<span style="color:#c0392b;">Salida: ${m.Salida}</span>` : ''}
-          </div>
-        </div>
-      `).join('');
+      if (!Array.isArray(movs) || movs.length === 0) {
+        cont.innerHTML = '<p class="vacio">No hay movimientos registrados.</p>';
+        return;
+      }
+
+      // Ordenar por fecha descendente
+      movs.sort((a, b) => new Date(b.Fecha) - new Date(a.Fecha));
+
+      // Agrupar por mes
+      const grupos = {};
+      movs.forEach(m => {
+        const clave = claveMes(m.Fecha);
+        if (!grupos[clave]) grupos[clave] = [];
+        grupos[clave].push(m);
+      });
+
+      let html = '';
+      Object.keys(grupos).forEach(mes => {
+        let totalEntradas = 0;
+        let totalSalidas = 0;
+        grupos[mes].forEach(m => {
+          totalEntradas += Number(m.Entrada) || 0;
+          totalSalidas += Number(m.Salida) || 0;
+        });
+
+        html += `<div class="grupo-mes">
+          <h3>${mes}</h3>
+          <div class="card" style="background:#f0f7ff; border-color:#bcd4f0;">
+            <div class="card-meta" style="justify-content:space-between; margin:0;">
+              <span style="color:#27ae60; font-weight:700;">+ ${totalEntradas.toLocaleString('es-ES')} CUP</span>
+              <span style="color:#c0392b; font-weight:700;">− ${totalSalidas.toLocaleString('es-ES')} CUP</span>
+              <span style="color:var(--azul); font-weight:700;">= ${(totalEntradas - totalSalidas).toLocaleString('es-ES')} CUP</span>
+            </div>
+          </div>`;
+
+        grupos[mes].forEach(m => {
+          html += `
+            <div class="card">
+              <div class="card-titulo">${escaparHTML(m.Concepto) || 'Sin concepto'}</div>
+              <div class="card-meta">
+                <span>📅 ${formatearFecha(m.Fecha)}</span>
+                ${m.Detalle ? `<span>${escaparHTML(m.Detalle)}</span>` : ''}
+              </div>
+              <div style="display:flex; gap:16px; font-weight:700;">
+                ${m.Entrada ? `<span style="color:#27ae60;">Entrada: ${Number(m.Entrada).toLocaleString('es-ES')} CUP</span>` : ''}
+                ${m.Salida ? `<span style="color:#c0392b;">Salida: ${Number(m.Salida).toLocaleString('es-ES')} CUP</span>` : ''}
+              </div>
+            </div>
+          `;
+        });
+        html += `</div>`;
+      });
+      cont.innerHTML = html;
     })
-    .catch(err => console.error("Error cargando economía:", err));
+    .catch(err => {
+      console.error("Error cargando economía:", err);
+      cont.innerHTML = '<p class="vacio">Error al cargar los movimientos.</p>';
+    });
 }
 
 function registrarEconomia() {
+  const concepto = document.getElementById('eco-concepto').value.trim();
+  if (!concepto) return alert('Escribe un concepto.');
+
   const formData = new FormData();
   formData.append('tipo', 'economia');
   formData.append('fecha', document.getElementById('eco-fecha').value || new Date().toISOString().split('T')[0]);
-  formData.append('concepto', document.getElementById('eco-concepto').value);
-  formData.append('detalle', document.getElementById('eco-detalle').value);
+  formData.append('concepto', concepto);
+  formData.append('detalle', document.getElementById('eco-detalle').value.trim());
   formData.append('entrada', document.getElementById('eco-entrada').value || 0);
   formData.append('salida', document.getElementById('eco-salida').value || 0);
 
@@ -283,17 +704,20 @@ function registrarEconomia() {
     .then(r => r.json())
     .then(res => {
       if (res.resultado === 'éxito') {
-        document.getElementById('eco-concepto').value = '';
-        document.getElementById('eco-detalle').value = '';
-        document.getElementById('eco-entrada').value = '';
-        document.getElementById('eco-salida').value = '';
+        ['eco-concepto','eco-detalle','eco-entrada','eco-salida'].forEach(id => {
+          document.getElementById(id).value = '';
+        });
         cargarEconomia();
       } else {
         alert('Error: ' + res.mensaje);
       }
-    });
+    })
+    .catch(err => alert('Error de red: ' + err.message));
 }
 
+// ==========================================
+// INICIO
+// ==========================================
 cargarSermones();
 </script>
 </body>
