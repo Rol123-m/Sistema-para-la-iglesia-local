@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iglesia Bautista de Sola</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f4f6f8; color: #333; padding: 16px; }
+    .container { max-width: 700px; margin: 0 auto; }
+    h1 { font-size: 1.5em; margin-bottom: 16px; color: #2c3e50; }
+    h2 { font-size: 1.2em; margin: 24px 0 12px; color: #34495e; border-bottom: 2px solid #3498db; padding-bottom: 4px; }
+    .card { background: white; border-radius: 10px; padding: 16px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+    .card .titulo { font-weight: 700; font-size: 1.05em; color: #2c3e50; }
+    .card .meta { color: #7f8c8d; font-size: 0.85em; margin: 4px 0; }
+    .card audio { width: 100%; margin-top: 8px; }
+    input, select, textarea, button { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 1em; }
+    button { background: #3498db; color: white; border: none; font-weight: 600; cursor: pointer; }
+    button:active { background: #2980b9; }
+    button.secondary { background: #95a5a6; }
+    .hidden { display: none; }
+    .tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+    .tabs button { flex: 1; background: #ecf0f1; color: #2c3e50; }
+    .tabs button.active { background: #3498db; color: white; }
+    .mensaje { padding: 10px; border-radius: 8px; margin-bottom: 10px; display: none; }
+    .mensaje.exito { background: #d4edda; color: #155724; display: block; }
+    .mensaje.error { background: #f8d7da; color: #721c24; display: block; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Iglesia Bautista de Sola</h1>
+
+  <div class="tabs">
+    <button id="btn-sermones" class="active" onclick="mostrarSeccion('sermones')">Sermones</button>
+    <button id="btn-miembros" onclick="mostrarSeccion('miembros')">Miembros</button>
+    <button id="btn-economia" onclick="mostrarSeccion('economia')">Economía</button>
+  </div>
+
+  <!-- SERMONES -->
+  <div id="seccion-sermones">
+    <div id="lista-sermones"></div>
+    <h2>Publicar un Sermón</h2>
+    <div class="card">
+      <div id="mensaje-sermon" class="mensaje"></div>
+      <input type="text" id="sermon-titulo" placeholder="Título del sermón" required>
+      <input type="text" id="sermon-predicador" placeholder="Predicador" required>
+      <input type="text" id="sermon-tema" placeholder="Tema (opcional)">
+      <textarea id="sermon-descripcion" placeholder="Descripción breve (opcional)"></textarea>
+      <label style="font-size:0.9em; color:#555;">Subir audio (opcional):</label>
+      <input type="file" id="sermon-archivo" accept="audio/*">
+      <button onclick="publicarSermon()">Publicar Sermón</button>
+    </div>
+  </div>
+
+  <!-- MIEMBROS -->
+  <div id="seccion-miembros" class="hidden">
+    <div id="lista-miembros"></div>
+    <h2>Agregar Miembro</h2>
+    <div class="card">
+      <input type="text" id="miembro-nombre" placeholder="Nombre completo">
+      <select id="miembro-categoria">
+        <option value="Caballeros">Caballeros</option>
+        <option value="Damas">Damas</option>
+        <option value="Jóvenes">Jóvenes</option>
+        <option value="Juveniles">Juveniles</option>
+        <option value="Tercera Edad">Tercera Edad</option>
+        <option value="Líderes">Líderes</option>
+      </select>
+      <button onclick="agregarMiembro()">Agregar Miembro</button>
+    </div>
+  </div>
+
+  <!-- ECONOMIA -->
+  <div id="seccion-economia" class="hidden">
+    <div id="lista-economia"></div>
+    <h2>Registrar Movimiento</h2>
+    <div class="card">
+      <input type="date" id="eco-fecha">
+      <input type="text" id="eco-concepto" placeholder="Concepto">
+      <input type="text" id="eco-detalle" placeholder="Detalle">
+      <input type="number" id="eco-entrada" placeholder="Entrada (CUP)" step="0.01">
+      <input type="number" id="eco-salida" placeholder="Salida (CUP)" step="0.01">
+      <button onclick="registrarEconomia()">Registrar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const API_URL = "https://script.google.com/macros/s/AKfycbyXUXBaNyvH0hXwfusKcJYy7cGACdVU_zREBRHBCOf_b3OnkfHlOd3F3nRkiXeWvPFVeg/exec";
+
+function mostrarSeccion(nombre) {
+  ['sermones', 'miembros', 'economia'].forEach(s => {
+    document.getElementById('seccion-' + s).classList.add('hidden');
+    document.getElementById('btn-' + s).classList.remove('active');
+  });
+  document.getElementById('seccion-' + nombre).classList.remove('hidden');
+  document.getElementById('btn-' + nombre).classList.add('active');
+
+  if (nombre === 'sermones') cargarSermones();
+  if (nombre === 'miembros') cargarMiembros();
+  if (nombre === 'economia') cargarEconomia();
+}
+
+function cargarSermones() {
+  fetch(API_URL + "?tipo=sermones")
+    .then(r => r.json())
+    .then(sermones => {
+      const cont = document.getElementById("lista-sermones");
+      if (!sermones.length) {
+        cont.innerHTML = '<p style="color:#888;">No hay sermones publicados aún.</p>';
+        return;
+      }
+      cont.innerHTML = sermones.map(s => `
+        <div class="card">
+          <div class="titulo">${s.Titulo || 'Sin título'}</div>
+          <div class="meta">${s.Predicador || ''} — ${s.Fecha || ''}</div>
+          <p style="margin:6px 0;">${s.Descripcion || ''}</p>
+          ${s.EnlaceAudio ? `<audio controls src="${s.EnlaceAudio}"></audio>` : ''}
+        </div>
+      `).join('');
+    })
+    .catch(err => console.error("Error cargando sermones:", err));
+}
+
+function publicarSermon() {
+  const titulo = document.getElementById('sermon-titulo').value;
+  const predicador = document.getElementById('sermon-predicador').value;
+  const tema = document.getElementById('sermon-tema').value;
+  const descripcion = document.getElementById('sermon-descripcion').value;
+  const archivo = document.getElementById('sermon-archivo').files[0];
+  const msg = document.getElementById('mensaje-sermon');
+
+  if (!titulo || !predicador) {
+    msg.className = 'mensaje error';
+    msg.textContent = 'Título y predicador son obligatorios.';
+    return;
+  }
+
+  if (archivo) {
+    const reader = new FileReader();
+    reader.readAsArrayBuffer(archivo);
+    reader.onload = function(e) {
+      const bytes = Array.from(new Uint8Array(e.target.result));
+      const qs = new URLSearchParams({
+        accion: 'subirAudio',
+        filename: archivo.name,
+        mimeType: archivo.type
+      });
+      fetch(API_URL + '?' + qs, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          bytes: bytes,
+          filename: archivo.name,
+          mimeType: archivo.type,
+          titulo: titulo,
+          predicador: predicador,
+          tema: tema,
+          descripcion: descripcion
+        })
+      })
+      .then(r => r.json())
+      .then(res => {
+        if (res.resultado === 'éxito') {
+          msg.className = 'mensaje exito';
+          msg.textContent = 'Sermón publicado con audio.';
+          limpiarFormSermon();
+          cargarSermones();
+        } else {
+          msg.className = 'mensaje error';
+          msg.textContent = 'Error: ' + (res.mensaje || 'desconocido');
+        }
+      })
+      .catch(err => {
+        msg.className = 'mensaje error';
+        msg.textContent = 'Error de red: ' + err.message;
+      });
+    };
+  } else {
+    const formData = new FormData();
+    formData.append('tipo', 'sermon');
+    formData.append('titulo', titulo);
+    formData.append('predicador', predicador);
+    formData.append('tema', tema);
+    formData.append('descripcion', descripcion);
+    formData.append('enlaceAudio', '');
+
+    fetch(API_URL, { method: 'POST', body: formData })
+      .then(r => r.json())
+      .then(res => {
+        if (res.resultado === 'éxito') {
+          msg.className = 'mensaje exito';
+          msg.textContent = 'Sermón publicado (sin audio).';
+          limpiarFormSermon();
+          cargarSermones();
+        } else {
+          msg.className = 'mensaje error';
+          msg.textContent = 'Error: ' + (res.mensaje || 'desconocido');
+        }
+      })
+      .catch(err => {
+        msg.className = 'mensaje error';
+        msg.textContent = 'Error de red: ' + err.message;
+      });
+  }
+}
+
+function limpiarFormSermon() {
+  document.getElementById('sermon-titulo').value = '';
+  document.getElementById('sermon-predicador').value = '';
+  document.getElementById('sermon-tema').value = '';
+  document.getElementById('sermon-descripcion').value = '';
+  document.getElementById('sermon-archivo').value = '';
+}
+
+function cargarMiembros() {
+  fetch(API_URL + "?tipo=miembros")
+    .then(r => r.json())
+    .then(miembros => {
+      const cont = document.getElementById("lista-miembros");
+      cont.innerHTML = miembros.map(m => `
+        <div class="card">
+          <div class="titulo">${m.Nombre}</div>
+          <div class="meta">${m.Categoria || ''}</div>
+        </div>
+      `).join('');
+    })
+    .catch(err => console.error("Error cargando miembros:", err));
+}
+
+function agregarMiembro() {
+  const nombre = document.getElementById('miembro-nombre').value;
+  const categoria = document.getElementById('miembro-categoria').value;
+  if (!nombre) return alert('Escribe el nombre');
+
+  const formData = new FormData();
+  formData.append('tipo', 'miembro');
+  formData.append('nombre', nombre);
+  formData.append('categoria', categoria);
+
+  fetch(API_URL, { method: 'POST', body: formData })
+    .then(r => r.json())
+    .then(res => {
+      if (res.resultado === 'éxito') {
+        document.getElementById('miembro-nombre').value = '';
+        cargarMiembros();
+      } else {
+        alert('Error: ' + res.mensaje);
+      }
+    });
+}
+
+function cargarEconomia() {
+  fetch(API_URL + "?tipo=economia")
+    .then(r => r.json())
+    .then(movs => {
+      const cont = document.getElementById("lista-economia");
+      cont.innerHTML = movs.map(m => `
+        <div class="card">
+          <div class="titulo">${m.Concepto || ''}</div>
+          <div class="meta">${m.Fecha || ''} — ${m.Detalle || ''}</div>
+          <div style="display:flex; gap:16px; margin-top:6px;">
+            ${m.Entrada ? `<span style="color:#27ae60;">Entrada: ${m.Entrada}</span>` : ''}
+            ${m.Salida ? `<span style="color:#c0392b;">Salida: ${m.Salida}</span>` : ''}
+          </div>
+        </div>
+      `).join('');
+    })
+    .catch(err => console.error("Error cargando economía:", err));
+}
+
+function registrarEconomia() {
+  const formData = new FormData();
+  formData.append('tipo', 'economia');
+  formData.append('fecha', document.getElementById('eco-fecha').value || new Date().toISOString().split('T')[0]);
+  formData.append('concepto', document.getElementById('eco-concepto').value);
+  formData.append('detalle', document.getElementById('eco-detalle').value);
+  formData.append('entrada', document.getElementById('eco-entrada').value || 0);
+  formData.append('salida', document.getElementById('eco-salida').value || 0);
+
+  fetch(API_URL, { method: 'POST', body: formData })
+    .then(r => r.json())
+    .then(res => {
+      if (res.resultado === 'éxito') {
+        document.getElementById('eco-concepto').value = '';
+        document.getElementById('eco-detalle').value = '';
+        document.getElementById('eco-entrada').value = '';
+        document.getElementById('eco-salida').value = '';
+        cargarEconomia();
+      } else {
+        alert('Error: ' + res.mensaje);
+      }
+    });
+}
+
+cargarSermones();
+</script>
+</body>
+</html>
