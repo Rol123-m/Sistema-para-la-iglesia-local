@@ -3,178 +3,589 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Iglesia Bautista de Sola</title>
+<title>Iglesia Bautista de Sola · Sistema de Gestión</title>
 <style>
+  /* ============ RESET Y BASE ============ */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --azul: #1e3a5f;
-    --azul-claro: #2c5282;
-    --dorado: #b8860b;
-    --gris-fondo: #f7f8fa;
-    --gris-borde: #e2e8f0;
-    --texto: #1a202c;
-    --texto-suave: #64748b;
+    --azul-900: #0f2440;
+    --azul-800: #16385f;
+    --azul-700: #1e4a7a;
+    --azul-600: #2c5f96;
+    --azul-500: #3b7bbf;
+    --azul-100: #e8f1fa;
+    --azul-50:  #f3f8fd;
+    --dorado-700: #8a6508;
+    --dorado-600: #a87c0a;
+    --dorado-500: #c99a1a;
+    --dorado-100: #faf3dd;
+    --neutro-900: #1a202c;
+    --neutro-700: #334155;
+    --neutro-500: #64748b;
+    --neutro-400: #94a3b8;
+    --neutro-300: #cbd5e1;
+    --neutro-200: #e2e8f0;
+    --neutro-100: #f1f5f9;
+    --neutro-50:  #f8fafc;
     --blanco: #ffffff;
-    --sombra: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05);
+    --verde: #16a34a;
+    --rojo: #dc2626;
+    --sombra-sm: 0 1px 2px rgba(15,36,64,0.06);
+    --sombra-md: 0 4px 12px rgba(15,36,64,0.08), 0 1px 3px rgba(15,36,64,0.04);
+    --sombra-lg: 0 12px 32px rgba(15,36,64,0.12), 0 2px 6px rgba(15,36,64,0.06);
+    --radio-sm: 8px;
+    --radio-md: 12px;
+    --radio-lg: 16px;
+    --transicion: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
   body {
-    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-    background: var(--gris-fondo); color: var(--texto); line-height: 1.6; padding-bottom: 40px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background: var(--neutro-50);
+    color: var(--neutro-900);
+    line-height: 1.6;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
   }
+
+  /* ============ HEADER ============ */
   .header {
-    background: linear-gradient(135deg, var(--azul) 0%, var(--azul-claro) 100%);
-    color: white; padding: 32px 16px 24px; text-align: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    background: linear-gradient(135deg, var(--azul-900) 0%, var(--azul-700) 100%);
+    color: white;
+    padding: 28px 24px 26px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
   }
-  .header h1 { font-size: 1.6em; font-weight: 700; letter-spacing: 0.5px; }
-  .header p { font-size: 0.9em; opacity: 0.85; margin-top: 4px; }
-  .nav {
-    display: flex; justify-content: center; gap: 4px;
-    background: var(--blanco); border-bottom: 1px solid var(--gris-borde);
-    position: sticky; top: 0; z-index: 10;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.04); flex-wrap: wrap;
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(201,154,26,0.18) 0%, transparent 45%),
+      radial-gradient(circle at 85% 80%, rgba(59,123,191,0.25) 0%, transparent 50%);
+    pointer-events: none;
   }
-  .nav button {
-    flex: 1; min-width: 80px; max-width: 160px; background: none; border: none;
-    padding: 16px 6px; font-size: 0.9em; font-weight: 600;
-    color: var(--texto-suave); cursor: pointer;
-    border-bottom: 3px solid transparent; transition: all 0.2s;
+  .header-content { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; }
+  .header-logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    margin-bottom: 12px;
+    font-size: 1.5em;
+    backdrop-filter: blur(8px);
   }
-  .nav button.active { color: var(--azul); border-bottom-color: var(--dorado); }
-  .nav button:hover { color: var(--azul-claro); }
-  .container { max-width: 800px; margin: 0 auto; padding: 24px 16px; }
-  .seccion-titulo {
-    font-size: 1.3em; font-weight: 700; color: var(--azul);
-    margin: 28px 0 16px; padding-bottom: 8px;
-    border-bottom: 2px solid var(--dorado); display: inline-block;
+  .header h1 {
+    font-size: 1.55em;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
   }
-  .grupo-mes { margin-bottom: 32px; }
-  .grupo-mes h3 {
-    font-size: 0.85em; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 1px; color: var(--texto-suave); margin-bottom: 12px;
-  }
-  .card {
-    background: var(--blanco); border-radius: 12px; padding: 20px;
-    margin-bottom: 14px; box-shadow: var(--sombra);
-    border: 1px solid var(--gris-borde);
-    transition: transform 0.15s, box-shadow 0.15s;
-  }
-  .card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
-  .card-titulo { font-size: 1.15em; font-weight: 700; color: var(--azul); margin-bottom: 4px; }
-  .card-meta {
-    display: flex; flex-wrap: wrap; gap: 12px;
-    font-size: 0.85em; color: var(--texto-suave); margin-bottom: 10px;
-  }
-  .card-desc { font-size: 0.95em; color: #475569; margin-bottom: 14px; }
-  .card-acciones { display: flex; gap: 10px; flex-wrap: wrap; }
-  .btn {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 10px 18px; border-radius: 8px;
-    font-size: 0.9em; font-weight: 600;
-    text-decoration: none; border: none; cursor: pointer; transition: all 0.15s;
-  }
-  .btn-primario { background: var(--azul); color: white; }
-  .btn-primario:hover { background: var(--azul-claro); }
-  .btn-secundario { background: #edf2f7; color: var(--azul); }
-  .btn-secundario:hover { background: #e2e8f0; }
-  .btn-dorado { background: var(--dorado); color: white; }
-  .btn-dorado:hover { background: #9a6f0a; }
-  input, select, textarea {
-    width: 100%; padding: 11px 14px; margin-bottom: 12px;
-    border: 1px solid var(--gris-borde); border-radius: 8px;
-    font-size: 0.95em; font-family: inherit;
-    background: var(--blanco); transition: border-color 0.15s;
-  }
-  input:focus, select:focus, textarea:focus {
-    outline: none; border-color: var(--azul-claro);
-    box-shadow: 0 0 0 3px rgba(44,82,130,0.1);
-  }
-  textarea { resize: vertical; min-height: 70px; }
-  label.campo {
-    display: block; font-size: 0.85em; font-weight: 600;
-    color: var(--texto-suave); margin-bottom: 4px;
-  }
-  .form-card {
-    background: var(--blanco); border-radius: 12px; padding: 24px;
-    box-shadow: var(--sombra); border: 1px solid var(--gris-borde);
-  }
-  .hidden { display: none !important; }
-  .mensaje {
-    padding: 12px 16px; border-radius: 8px; margin-bottom: 16px;
-    display: none; font-size: 0.9em; font-weight: 500;
-  }
-  .mensaje.exito { background: #f0fff4; color: #22543d; border: 1px solid #9ae6b4; display: block; }
-  .mensaje.error { background: #fff5f5; color: #742a2a; border: 1px solid #feb2b2; display: block; }
-  .vacio { text-align: center; color: var(--texto-suave); padding: 40px 20px; font-size: 0.95em; }
-  .badge {
-    display: inline-block; background: #edf2f7; color: var(--azul);
-    padding: 2px 10px; border-radius: 12px;
-    font-size: 0.75em; font-weight: 600;
-    text-transform: uppercase; letter-spacing: 0.5px;
-  }
-  .login-wrapper {
-    min-height: 100vh; display: flex; align-items: center; justify-content: center;
-    background: linear-gradient(135deg, var(--azul) 0%, var(--azul-claro) 100%); padding: 20px;
-  }
-  .login-box {
-    background: white; border-radius: 16px; padding: 36px 28px;
-    max-width: 420px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-  }
-  .login-box h1 { color: var(--azul); font-size: 1.4em; text-align: center; margin-bottom: 4px; }
-  .login-box .subtitulo { text-align: center; color: var(--texto-suave); font-size: 0.9em; margin-bottom: 24px; }
-  .login-tabs {
-    display: flex; gap: 8px; margin-bottom: 20px;
-    background: #edf2f7; padding: 4px; border-radius: 10px;
-  }
-  .login-tabs button {
-    flex: 1; background: none; border: none; padding: 10px;
-    border-radius: 8px; font-weight: 600; font-size: 0.9em;
-    color: var(--texto-suave); cursor: pointer;
-  }
-  .login-tabs button.active {
-    background: white; color: var(--azul); box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  .header .subtitulo {
+    font-size: 0.88em;
+    opacity: 0.75;
+    margin-top: 4px;
+    letter-spacing: 0.02em;
+    font-weight: 400;
   }
   .usuario-badge {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: rgba(255,255,255,0.15); padding: 6px 12px;
-    border-radius: 20px; font-size: 0.85em; margin-top: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.18);
+    padding: 6px 8px 6px 14px;
+    border-radius: 24px;
+    font-size: 0.85em;
+    margin-top: 16px;
+    backdrop-filter: blur(8px);
+  }
+  .usuario-badge .nombre {
+    font-weight: 600;
+    color: white;
+  }
+  .usuario-badge .rol {
+    color: rgba(255,255,255,0.75);
+    font-size: 0.9em;
   }
   .logout-btn {
-    background: rgba(255,255,255,0.2); color: white;
-    border: 1px solid rgba(255,255,255,0.3); padding: 6px 14px;
-    border-radius: 20px; font-size: 0.8em; cursor: pointer; margin-left: 8px;
+    background: rgba(255,255,255,0.15);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 6px 14px;
+    border-radius: 18px;
+    font-size: 0.85em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transicion);
+    font-family: inherit;
   }
-  .logout-btn:hover { background: rgba(255,255,255,0.3); }
+  .logout-btn:hover { background: rgba(255,255,255,0.28); transform: translateY(-1px); }
+
+  /* ============ NAV ============ */
+  .nav {
+    display: flex;
+    justify-content: center;
+    gap: 2px;
+    background: var(--blanco);
+    border-bottom: 1px solid var(--neutro-200);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    box-shadow: var(--sombra-sm);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav button {
+    flex: 0 0 auto;
+    background: none;
+    border: none;
+    padding: 16px 22px;
+    font-size: 0.9em;
+    font-weight: 600;
+    color: var(--neutro-500);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: var(--transicion);
+    font-family: inherit;
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+    position: relative;
+  }
+  .nav button:hover { color: var(--azul-700); background: var(--azul-50); }
+  .nav button.active {
+    color: var(--azul-800);
+    border-bottom-color: var(--dorado-500);
+    background: linear-gradient(to bottom, transparent 60%, var(--dorado-100) 100%);
+  }
+
+  /* ============ CONTENEDOR ============ */
+  .container { max-width: 900px; margin: 0 auto; padding: 32px 20px 60px; }
+
+  /* ============ TÍTULOS DE SECCIÓN ============ */
+  .seccion-titulo {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: var(--azul-900);
+    margin: 8px 0 20px;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .seccion-titulo::before {
+    content: '';
+    width: 4px;
+    height: 22px;
+    background: linear-gradient(to bottom, var(--dorado-500), var(--dorado-700));
+    border-radius: 2px;
+    display: inline-block;
+  }
+  .subtitulo-seccion {
+    color: var(--neutro-500);
+    font-size: 0.9em;
+    margin: -8px 0 20px;
+    padding-left: 14px;
+  }
+
+  /* ============ TARJETAS ============ */
+  .card {
+    background: var(--blanco);
+    border-radius: var(--radio-md);
+    padding: 20px 22px;
+    margin-bottom: 14px;
+    box-shadow: var(--sombra-sm);
+    border: 1px solid var(--neutro-200);
+    transition: var(--transicion);
+    position: relative;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--sombra-md);
+    border-color: var(--neutro-300);
+  }
+  .card-titulo {
+    font-size: 1.08em;
+    font-weight: 700;
+    color: var(--azul-900);
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+    line-height: 1.35;
+  }
+  .card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    font-size: 0.85em;
+    color: var(--neutro-500);
+    margin-bottom: 10px;
+    align-items: center;
+  }
+  .card-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .card-desc {
+    font-size: 0.95em;
+    color: var(--neutro-700);
+    margin-bottom: 14px;
+    line-height: 1.65;
+  }
+  .card-acciones { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+
+  /* ============ BOTONES ============ */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 22px;
+    border-radius: var(--radio-sm);
+    font-size: 0.9em;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: var(--transicion);
+    font-family: inherit;
+    letter-spacing: 0.01em;
+    line-height: 1;
+  }
+  .btn-primario {
+    background: var(--azul-800);
+    color: white;
+    box-shadow: 0 1px 2px rgba(15,36,64,0.15);
+  }
+  .btn-primario:hover {
+    background: var(--azul-700);
+    box-shadow: 0 4px 12px rgba(15,36,64,0.2);
+    transform: translateY(-1px);
+  }
+  .btn-primario:active { transform: translateY(0); }
+  .btn-secundario {
+    background: var(--neutro-100);
+    color: var(--azul-800);
+    border-color: var(--neutro-200);
+  }
+  .btn-secundario:hover { background: var(--neutro-200); }
+  .btn-dorado {
+    background: linear-gradient(135deg, var(--dorado-600), var(--dorado-700));
+    color: white;
+    box-shadow: 0 1px 2px rgba(138,101,8,0.2);
+  }
+  .btn-dorado:hover {
+    background: linear-gradient(135deg, var(--dorado-500), var(--dorado-600));
+    box-shadow: 0 4px 12px rgba(138,101,8,0.3);
+    transform: translateY(-1px);
+  }
+
+  /* ============ FORMULARIOS ============ */
+  .form-card {
+    background: var(--blanco);
+    border-radius: var(--radio-md);
+    padding: 28px 26px;
+    box-shadow: var(--sombra-md);
+    border: 1px solid var(--neutro-200);
+    position: relative;
+  }
+  label.campo {
+    display: block;
+    font-size: 0.82em;
+    font-weight: 600;
+    color: var(--neutro-700);
+    margin-bottom: 6px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  input, select, textarea {
+    width: 100%;
+    padding: 11px 14px;
+    margin-bottom: 16px;
+    border: 1px solid var(--neutro-200);
+    border-radius: var(--radio-sm);
+    font-size: 0.95em;
+    font-family: inherit;
+    background: var(--blanco);
+    color: var(--neutro-900);
+    transition: var(--transicion);
+    line-height: 1.5;
+  }
+  input::placeholder, textarea::placeholder { color: var(--neutro-400); }
+  input:hover, select:hover, textarea:hover { border-color: var(--neutro-300); }
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--azul-500);
+    box-shadow: 0 0 0 4px rgba(59,123,191,0.12);
+    background: var(--blanco);
+  }
+  textarea { resize: vertical; min-height: 80px; }
+  select { cursor: pointer; }
+  input[type="file"] { padding: 8px 12px; font-size: 0.9em; cursor: pointer; }
+  input[type="date"] { cursor: pointer; }
+
+  /* ============ MENSAJES ============ */
+  .mensaje {
+    padding: 12px 16px;
+    border-radius: var(--radio-sm);
+    margin-bottom: 16px;
+    display: none;
+    font-size: 0.9em;
+    font-weight: 500;
+    border: 1px solid transparent;
+  }
+  .mensaje.exito {
+    background: #f0fdf4;
+    color: #14532d;
+    border-color: #86efac;
+    display: block;
+  }
+  .mensaje.error {
+    background: #fef2f2;
+    color: #7f1d1d;
+    border-color: #fca5a5;
+    display: block;
+  }
+
+  /* ============ ESTADOS VACÍOS ============ */
+  .vacio {
+    text-align: center;
+    color: var(--neutro-400);
+    padding: 56px 24px;
+    font-size: 0.95em;
+    background: var(--blanco);
+    border-radius: var(--radio-md);
+    border: 1px dashed var(--neutro-200);
+  }
+  .vacio::before {
+    content: '✦';
+    display: block;
+    font-size: 1.8em;
+    color: var(--neutro-300);
+    margin-bottom: 10px;
+  }
+
+  /* ============ BADGES ============ */
+  .badge {
+    display: inline-block;
+    background: var(--azul-100);
+    color: var(--azul-800);
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.72em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    line-height: 1.4;
+  }
+  .badge-dorado { background: var(--dorado-100); color: var(--dorado-700); }
+
+  /* ============ GRUPOS POR MES ============ */
+  .grupo-mes { margin-bottom: 36px; }
+  .grupo-mes h3 {
+    font-size: 0.78em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--neutro-500);
+    margin-bottom: 14px;
+    padding-left: 4px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .grupo-mes h3::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--neutro-200), transparent);
+  }
+
+  /* ============ CALENDARIO ============ */
   .calendario-dia {
-    background: white; border-radius: 10px; padding: 14px;
-    margin-bottom: 10px; border-left: 4px solid var(--dorado);
-    box-shadow: var(--sombra);
+    background: var(--blanco);
+    border-radius: var(--radio-md);
+    padding: 16px 18px;
+    margin-bottom: 10px;
+    border: 1px solid var(--neutro-200);
+    border-left: 4px solid var(--dorado-500);
+    box-shadow: var(--sombra-sm);
+    transition: var(--transicion);
+  }
+  .calendario-dia:hover {
+    border-left-color: var(--azul-600);
+    box-shadow: var(--sombra-md);
+    transform: translateX(2px);
   }
   .calendario-fecha {
-    font-weight: 700; color: var(--azul); font-size: 0.95em;
+    font-weight: 700;
+    color: var(--azul-900);
+    font-size: 0.9em;
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
   }
-  .calendario-actividad { font-size: 0.9em; color: #475569; margin-top: 4px; }
+  .calendario-actividad {
+    font-size: 0.92em;
+    color: var(--neutro-700);
+    line-height: 1.55;
+  }
   .calendario-hora {
-    display: inline-block; background: var(--azul); color: white;
-    padding: 2px 8px; border-radius: 10px; font-size: 0.75em; font-weight: 600;
-    margin-right: 6px;
+    display: inline-block;
+    background: var(--azul-800);
+    color: white;
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-size: 0.72em;
+    font-weight: 700;
+    margin-right: 8px;
+    letter-spacing: 0.03em;
+    vertical-align: middle;
   }
-  @media (max-width: 600px) {
+
+  /* ============ RESUMEN ECONÓMICO ============ */
+  .resumen-mes {
+    background: linear-gradient(135deg, var(--azul-50), var(--blanco)) !important;
+    border: 1px solid var(--azul-100) !important;
+  }
+  .resumen-mes .card-meta {
+    justify-content: space-between;
+    margin: 0;
+    gap: 10px;
+  }
+  .resumen-mes .card-meta span { font-weight: 700; font-size: 0.9em; }
+
+  /* ============ LOGIN ============ */
+  .login-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+      radial-gradient(circle at 20% 30%, rgba(201,154,26,0.15) 0%, transparent 45%),
+      radial-gradient(circle at 80% 70%, rgba(59,123,191,0.2) 0%, transparent 50%),
+      linear-gradient(135deg, var(--azul-900) 0%, var(--azul-700) 100%);
+    padding: 24px;
+  }
+  .login-box {
+    background: var(--blanco);
+    border-radius: var(--radio-lg);
+    padding: 40px 32px 32px;
+    max-width: 440px;
+    width: 100%;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.35), 0 4px 12px rgba(0,0,0,0.15);
+    position: relative;
+    overflow: hidden;
+  }
+  .login-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(to right, var(--dorado-500), var(--azul-500), var(--dorado-500));
+  }
+  .login-logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .login-logo-icon {
+    width: 56px; height: 56px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--azul-800), var(--azul-600));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.6em;
+    box-shadow: 0 8px 20px rgba(30,74,122,0.3);
+  }
+  .login-box h1 {
+    color: var(--azul-900);
+    font-size: 1.35em;
+    text-align: center;
+    margin-bottom: 6px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .login-box .subtitulo {
+    text-align: center;
+    color: var(--neutro-500);
+    font-size: 0.9em;
+    margin-bottom: 28px;
+  }
+  .login-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 24px;
+    background: var(--neutro-100);
+    padding: 4px;
+    border-radius: var(--radio-sm);
+  }
+  .login-tabs button {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9em;
+    color: var(--neutro-500);
+    cursor: pointer;
+    transition: var(--transicion);
+    font-family: inherit;
+  }
+  .login-tabs button.active {
+    background: var(--blanco);
+    color: var(--azul-800);
+    box-shadow: var(--sombra-sm);
+  }
+
+  /* ============ LOGOUT BTN EN HEADER ============ */
+  .hidden { display: none !important; }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 640px) {
+    body { font-size: 14.5px; }
+    .header { padding: 24px 16px 22px; }
     .header h1 { font-size: 1.3em; }
-    .nav button { font-size: 0.75em; padding: 12px 4px; }
-    .card { padding: 16px; }
+    .header-logo { width: 46px; height: 46px; font-size: 1.3em; }
+    .nav button { padding: 14px 16px; font-size: 0.82em; }
+    .container { padding: 24px 14px 50px; }
+    .card { padding: 16px 18px; }
+    .form-card { padding: 22px 20px; }
     .card-acciones { flex-direction: column; }
-    .btn { justify-content: center; }
+    .card-acciones .btn { width: 100%; }
+    .login-box { padding: 32px 24px 26px; }
+    .calendario-dia { padding: 14px 16px; }
+  }
+
+  /* ============ ANIMACIONES SUTILES ============ */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .card, .calendario-dia {
+    animation: fadeInUp 0.3s ease-out both;
   }
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
+<!-- ============ LOGIN ============ -->
 <div id="pantalla-login" class="login-wrapper">
   <div class="login-box">
+    <div class="login-logo">
+      <div class="login-logo-icon">✝</div>
+    </div>
     <h1>Iglesia Bautista de Sola</h1>
-    <p class="subtitulo">Sistema de gestión</p>
+    <p class="subtitulo">Sistema de Gestión</p>
 
     <div class="login-tabs">
       <button id="tab-miembro" class="active" onclick="cambiarTabLogin('miembro')">Miembro</button>
@@ -188,8 +599,10 @@
       <input type="text" id="login-miembro-nombre" placeholder="Nombre y apellidos">
       <label class="campo">Contraseña</label>
       <input type="password" id="login-miembro-password" placeholder="Elige una contraseña">
-      <button class="btn btn-primario" style="width:100%; justify-content:center; margin-top:8px;" onclick="loginMiembro()">Entrar</button>
-      <p style="font-size:0.8em; color:var(--texto-suave); text-align:center; margin-top:12px;">Si es tu primera vez, se creará tu cuenta automáticamente.</p>
+      <button class="btn btn-primario" style="width:100%; margin-top:8px;" onclick="loginMiembro()">Entrar</button>
+      <p style="font-size:0.82em; color:var(--neutro-500); text-align:center; margin-top:16px; line-height:1.5;">
+        Si es tu primera vez, se creará tu cuenta automáticamente.
+      </p>
     </div>
 
     <div id="form-login-admin" class="hidden">
@@ -197,19 +610,22 @@
       <select id="login-admin-nombre"><option value="">-- Selecciona --</option></select>
       <label class="campo">Contraseña</label>
       <input type="password" id="login-admin-password" placeholder="Tu contraseña">
-      <button class="btn btn-primario" style="width:100%; justify-content:center; margin-top:8px;" onclick="loginAdmin()">Entrar como administrador</button>
+      <button class="btn btn-primario" style="width:100%; margin-top:8px;" onclick="loginAdmin()">Entrar como administrador</button>
     </div>
   </div>
 </div>
 
-<!-- APP -->
+<!-- ============ APP ============ -->
 <div id="pantalla-app" class="hidden">
   <header class="header">
-    <h1>Iglesia Bautista de Sola</h1>
-    <p>Sistema de gestión</p>
-    <div class="usuario-badge">
-      <span id="info-usuario">—</span>
-      <button class="logout-btn" onclick="cerrarSesion()">Salir</button>
+    <div class="header-content">
+      <div class="header-logo">✝</div>
+      <h1>Iglesia Bautista de Sola</h1>
+      <p class="subtitulo">Sistema de Gestión</p>
+      <div class="usuario-badge">
+        <span class="nombre" id="info-usuario">—</span>
+        <button class="logout-btn" onclick="cerrarSesion()">Salir</button>
+      </div>
     </div>
   </header>
 
@@ -228,22 +644,23 @@
       <h2 class="seccion-titulo">Sermones</h2>
       <div id="lista-sermones"></div>
       <div id="form-sermon-admin" class="hidden">
-        <h2 class="seccion-titulo" style="margin-top:40px;">Publicar un sermón</h2>
+        <h2 class="seccion-titulo" style="margin-top:48px;">Publicar un sermón</h2>
+        <p class="subtitulo-seccion">Comparte un mensaje con la congregación</p>
         <div class="form-card">
           <div id="mensaje-sermon" class="mensaje"></div>
           <label class="campo">Título *</label>
-          <input type="text" id="sermon-titulo">
+          <input type="text" id="sermon-titulo" placeholder="Ej: La fe que agrada a Dios">
           <label class="campo">Predicador *</label>
-          <input type="text" id="sermon-predicador">
+          <input type="text" id="sermon-predicador" placeholder="Ej: Pastor Rolando">
           <label class="campo">Tema</label>
-          <input type="text" id="sermon-tema">
+          <input type="text" id="sermon-tema" placeholder="Ej: Fe, Esperanza">
           <label class="campo">Descripción</label>
-          <textarea id="sermon-descripcion"></textarea>
+          <textarea id="sermon-descripcion" placeholder="Breve resumen del sermón..."></textarea>
           <label class="campo">Enlace externo (opcional)</label>
           <input type="url" id="sermon-enlace" placeholder="https://...">
           <label class="campo">O sube un audio (opcional)</label>
           <input type="file" id="sermon-archivo" accept="audio/*">
-          <button class="btn btn-primario" style="width:100%; justify-content:center;" onclick="publicarSermon()">Publicar sermón</button>
+          <button class="btn btn-primario" style="width:100%; margin-top:8px;" onclick="publicarSermon()">Publicar sermón</button>
         </div>
       </div>
     </section>
@@ -253,14 +670,15 @@
       <h2 class="seccion-titulo">Anuncios</h2>
       <div id="lista-anuncios"></div>
       <div id="form-anuncio-admin" class="hidden">
-        <h2 class="seccion-titulo" style="margin-top:40px;">Publicar anuncio</h2>
+        <h2 class="seccion-titulo" style="margin-top:48px;">Publicar anuncio</h2>
+        <p class="subtitulo-seccion">Informa a la congregación sobre actividades y noticias</p>
         <div class="form-card">
           <div id="mensaje-anuncio" class="mensaje"></div>
           <label class="campo">Título *</label>
-          <input type="text" id="anuncio-titulo">
+          <input type="text" id="anuncio-titulo" placeholder="Ej: Ayuno de Damas">
           <label class="campo">Contenido *</label>
-          <textarea id="anuncio-contenido" style="min-height:100px;"></textarea>
-          <button class="btn btn-primario" style="width:100%; justify-content:center;" onclick="publicarAnuncio()">Publicar anuncio</button>
+          <textarea id="anuncio-contenido" style="min-height:120px;" placeholder="Escribe el contenido del anuncio..."></textarea>
+          <button class="btn btn-primario" style="width:100%; margin-top:8px;" onclick="publicarAnuncio()">Publicar anuncio</button>
         </div>
       </div>
     </section>
@@ -268,12 +686,13 @@
     <!-- CALENDARIO -->
     <section id="seccion-calendario" class="hidden">
       <h2 class="seccion-titulo">Calendario de la iglesia</h2>
-      <p style="color:var(--texto-suave); font-size:0.9em; margin-bottom:16px;">
+      <p class="subtitulo-seccion">
         <strong>Cultos fijos:</strong> Martes y Sábado 5:30 p.m. · Domingo 9:30 a.m.
       </p>
       <div id="lista-calendario"></div>
       <div id="form-calendario-admin" class="hidden">
-        <h2 class="seccion-titulo" style="margin-top:40px;">Agregar actividad</h2>
+        <h2 class="seccion-titulo" style="margin-top:48px;">Agregar actividad</h2>
+        <p class="subtitulo-seccion">Registra un evento en el calendario</p>
         <div class="form-card">
           <div id="mensaje-calendario" class="mensaje"></div>
           <label class="campo">Fecha *</label>
@@ -296,7 +715,7 @@
           <input type="text" id="cal-actividad" placeholder="Ej: Vigilia">
           <label class="campo">Lugar</label>
           <input type="text" id="cal-lugar" placeholder="Ej: Iglesia">
-          <button class="btn btn-primario" style="width:100%; justify-content:center;" onclick="agregarActividad()">Agregar actividad</button>
+          <button class="btn btn-primario" style="width:100%; margin-top:8px;" onclick="agregarActividad()">Agregar actividad</button>
         </div>
       </div>
     </section>
@@ -305,10 +724,11 @@
     <section id="seccion-miembros" class="hidden">
       <h2 class="seccion-titulo">Miembros</h2>
       <div id="lista-miembros"></div>
-      <h2 class="seccion-titulo" style="margin-top:40px;">Agregar miembro</h2>
+      <h2 class="seccion-titulo" style="margin-top:48px;">Agregar miembro</h2>
+      <p class="subtitulo-seccion">Registra un nuevo miembro en la congregación</p>
       <div class="form-card">
         <label class="campo">Nombre completo *</label>
-        <input type="text" id="miembro-nombre">
+        <input type="text" id="miembro-nombre" placeholder="Nombre y apellidos">
         <label class="campo">Categoría</label>
         <select id="miembro-categoria">
           <option value="Caballeros">Caballeros</option>
@@ -318,7 +738,7 @@
           <option value="Tercera Edad">Tercera Edad</option>
           <option value="Líderes">Líderes</option>
         </select>
-        <button class="btn btn-primario" style="width:100%; justify-content:center;" onclick="agregarMiembro()">Agregar miembro</button>
+        <button class="btn btn-primario" style="width:100%; margin-top:8px;" onclick="agregarMiembro()">Agregar miembro</button>
       </div>
     </section>
 
@@ -327,25 +747,26 @@
       <h2 class="seccion-titulo">Movimientos económicos</h2>
       <div id="lista-economia"></div>
       <div id="form-eco-admin" class="hidden">
-        <h2 class="seccion-titulo" style="margin-top:40px;">Registrar movimiento</h2>
+        <h2 class="seccion-titulo" style="margin-top:48px;">Registrar movimiento</h2>
+        <p class="subtitulo-seccion">Registra entradas y salidas de la iglesia</p>
         <div class="form-card">
           <div id="mensaje-eco" class="mensaje"></div>
           <label class="campo">Fecha</label>
           <input type="date" id="eco-fecha">
           <label class="campo">Concepto *</label>
-          <input type="text" id="eco-concepto">
+          <input type="text" id="eco-concepto" placeholder="Ej: Diezmo, Ofrenda, Pago de luz...">
           <label class="campo">Detalle</label>
-          <input type="text" id="eco-detalle">
+          <input type="text" id="eco-detalle" placeholder="Descripción adicional">
           <label class="campo">Entrada (CUP)</label>
-          <input type="number" id="eco-entrada" step="0.01" min="0">
+          <input type="number" id="eco-entrada" step="0.01" min="0" placeholder="0.00">
           <label class="campo">Salida (CUP)</label>
-          <input type="number" id="eco-salida" step="0.01" min="0">
-          <button class="btn btn-primario" style="width:100%; justify-content:center;" onclick="registrarEconomia()">Registrar movimiento</button>
+          <input type="number" id="eco-salida" step="0.01" min="0" placeholder="0.00">
+          <button class="btn btn-primario" style="width:100%; margin-top:8px;" onclick="registrarEconomia()">Registrar movimiento</button>
         </div>
       </div>
       <div id="aviso-sin-permiso-eco" class="hidden">
-        <div class="form-card" style="margin-top:24px; text-align:center; color:var(--texto-suave);">
-          🔒 Solo <strong>Yolexis Leandro</strong> y <strong>Yaquelin Cuadrado</strong> pueden registrar movimientos económicos.
+        <div class="form-card" style="margin-top:24px; text-align:center; color:var(--neutro-500);">
+          🔒 Solo <strong style="color:var(--azul-800);">Yolexis Leandro</strong> y <strong style="color:var(--azul-800);">Yaquelin Cuadrado</strong> pueden registrar movimientos económicos.
         </div>
       </div>
     </section>
@@ -727,11 +1148,11 @@ function cargarEconomia() {
         let te = 0, ts = 0;
         g[mes].forEach(m => { te += Number(m.Entrada) || 0; ts += Number(m.Salida) || 0; });
         html += `<div class="grupo-mes"><h3>${mes}</h3>
-          <div class="card" style="background:#f0f7ff; border-color:#bcd4f0;">
-            <div class="card-meta" style="justify-content:space-between; margin:0;">
-              <span style="color:#27ae60; font-weight:700;">+ ${te.toLocaleString('es-ES')} CUP</span>
-              <span style="color:#c0392b; font-weight:700;">− ${ts.toLocaleString('es-ES')} CUP</span>
-              <span style="color:var(--azul); font-weight:700;">= ${(te - ts).toLocaleString('es-ES')} CUP</span>
+          <div class="card resumen-mes">
+            <div class="card-meta">
+              <span style="color:var(--verde);">+ ${te.toLocaleString('es-ES')} CUP</span>
+              <span style="color:var(--rojo);">− ${ts.toLocaleString('es-ES')} CUP</span>
+              <span style="color:var(--azul-800);">= ${(te - ts).toLocaleString('es-ES')} CUP</span>
             </div>
           </div>`;
         g[mes].forEach(m => {
@@ -742,8 +1163,8 @@ function cargarEconomia() {
               ${m.Detalle ? `<span>${escaparHTML(m.Detalle)}</span>` : ''}
             </div>
             <div style="display:flex; gap:16px; font-weight:700;">
-              ${m.Entrada ? `<span style="color:#27ae60;">Entrada: ${Number(m.Entrada).toLocaleString('es-ES')} CUP</span>` : ''}
-              ${m.Salida ? `<span style="color:#c0392b;">Salida: ${Number(m.Salida).toLocaleString('es-ES')} CUP</span>` : ''}
+              ${m.Entrada ? `<span style="color:var(--verde);">Entrada: ${Number(m.Entrada).toLocaleString('es-ES')} CUP</span>` : ''}
+              ${m.Salida ? `<span style="color:var(--rojo);">Salida: ${Number(m.Salida).toLocaleString('es-ES')} CUP</span>` : ''}
             </div>
           </div>`;
         });
